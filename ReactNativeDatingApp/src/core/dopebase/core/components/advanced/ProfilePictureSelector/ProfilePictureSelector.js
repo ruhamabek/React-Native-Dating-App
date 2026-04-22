@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useRef, useMemo, useEffect } from 'react'
 import {
   View,
   TouchableOpacity,
@@ -13,14 +13,26 @@ import { useActionSheet, useTheme, useTranslations } from '../../..'
 import dynamicStyles from './styles'
 
 const defaultProfilePhotoURL =
-  'https://www.iosapptemplates.com/wp-content/uploads/2019/06/empty-avatar.jpg'
+  'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
 
 export const ProfilePictureSelector = props => {
   const [profilePictureURL, setProfilePictureURL] = useState(
-    props.profilePictureURL?.length > 0
+    props.profilePictureURL?.length > 0 &&
+      props.profilePictureURL !==
+        'https://www.iosapptemplates.com/wp-content/uploads/2019/06/empty-avatar.jpg'
       ? props.profilePictureURL
       : defaultProfilePhotoURL,
   )
+
+  useEffect(() => {
+    if (
+      props.profilePictureURL?.length > 0 &&
+      props.profilePictureURL !==
+        'https://www.iosapptemplates.com/wp-content/uploads/2019/06/empty-avatar.jpg'
+    ) {
+      setProfilePictureURL(props.profilePictureURL)
+    }
+  }, [props.profilePictureURL])
 
   const [isImageViewerVisible, setIsImageViewerVisible] = useState(false)
   const [tappedImage, setTappedImage] = useState([])
@@ -65,19 +77,11 @@ export const ProfilePictureSelector = props => {
 
 
 
-  const onImageError = (
-  ) => {
+  const onImageError = () => {
     console.log('Error loading profile photo at url ' + profilePictureURL)
-    alert(
-      'There was an error in uploading your profile photo. Please try a different image',
-    )
-    // Back to original photo after erroring out
-    setProfilePictureURL(
-      props.profilePictureURL?.length > 0
-        ? props.profilePictureURL
-        : defaultProfilePhotoURL,
-    )
-
+    if (profilePictureURL !== defaultProfilePhotoURL) {
+      setProfilePictureURL(defaultProfilePhotoURL)
+    }
   }
 
   const getPermissionAsync = async () => {

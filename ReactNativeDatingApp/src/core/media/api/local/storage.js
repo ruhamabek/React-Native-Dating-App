@@ -37,7 +37,7 @@ const processAndUploadMediaFileWithProgressTracking = async (
   // resolve({ error: ErrorCode.photoUploadFailed }); if unsuccessful
   resolve({
     downloadURL:
-      'https://www.iosapptemplates.com/wp-content/uploads/2019/06/empty-avatar.jpg',
+      'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
   })
 }
 
@@ -57,7 +57,7 @@ const processAndUploadMediaFile = file => {
     // resolve({ error: ErrorCode.photoUploadFailed }); if unsuccessful
     resolve({
       downloadURL:
-        'https://www.iosapptemplates.com/wp-content/uploads/2019/06/empty-avatar.jpg',
+        'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
     })
   })
 }

@@ -51,9 +51,9 @@ const HomeScreen = props => {
     StatusBar.setHidden(false)
     swipeTracker.current.subscribeComputingStatus(onComputingStatusUpdate)
     swipeTracker.current.subscribeMatchesNotSeen(onMatchesNotSeenUpdate)
-  
+
     const subscription = AppState.addEventListener('change', handleAppStateChange)
-  
+
     handleShouldFetchRecommendations()
     getUserSwipeCount()
 

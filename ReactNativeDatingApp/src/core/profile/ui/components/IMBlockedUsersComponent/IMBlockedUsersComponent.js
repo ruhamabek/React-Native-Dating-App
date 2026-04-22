@@ -23,7 +23,7 @@ const IMBlockedUsersComponent = props => {
   const { theme, appearance } = useTheme()
   const styles = dynamicStyles(theme, appearance)
   const defaultProfilePhotoURL =
-    'https://www.iosapptemplates.com/wp-content/uploads/2019/06/empty-avatar.jpg'
+    'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
 
   const renderItemView = ({ item }) => {
     const profilePicture = item.user?.profilePictureURL

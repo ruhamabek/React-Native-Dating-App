@@ -22,7 +22,7 @@ const BottomTabBar = props => {
       toValue: 1,
       duration: 300,
       easing: Easing.easeOutBack,
-    }).start(() => {})
+    }).start(() => { })
     props.onDislikePressed()
   }
 
@@ -32,7 +32,7 @@ const BottomTabBar = props => {
       toValue: 1,
       duration: 300,
       easing: Easing.easeOutBack,
-    }).start(() => {})
+    }).start(() => { })
     props.onSuperLikePressed()
   }
 
@@ -42,7 +42,7 @@ const BottomTabBar = props => {
       toValue: 1,
       duration: 300,
       easing: Easing.easeOutBack,
-    }).start(() => {})
+    }).start(() => { })
     props.onLikePressed()
   }
 

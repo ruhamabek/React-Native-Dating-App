@@ -1,6 +1,6 @@
 import React, { useCallback, useLayoutEffect } from 'react'
 import { View } from 'react-native'
-import { useFocusEffect, useNavigation } from '@react-navigation/core'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import deviceStorage from '../../utils/AuthDeviceStorage'
 import { useDispatch } from 'react-redux'
 import { setUserData } from '../../redux/auth'

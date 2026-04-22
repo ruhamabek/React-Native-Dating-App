@@ -5,7 +5,7 @@ import { useTheme } from '../../../..'
 import dynamicStyles from './styles'
 
 const defaultAvatar =
-  'https://www.iosapptemplates.com/wp-content/uploads/2019/06/empty-avatar.jpg'
+  'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
 
 export const StoryItem = memo(props => {
   const {

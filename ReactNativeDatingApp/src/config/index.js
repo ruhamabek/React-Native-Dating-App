@@ -20,9 +20,9 @@ export const ConfigProvider = ({ children }) => {
     appIdentifier: `rn-dating-${Platform.OS}`,
     facebookIdentifier: '1288726485109267',
     webClientId: Platform.select({
-      ios: '22965687108-k9uqgstoahao7bndat1lgbhmlektp2jb.apps.googleusercontent.com',
+      ios: '471656365436-093np643tahqo42vmdurm8bpes4vtmnh.apps.googleusercontent.com',
       default:
-        '22965687108-eb2r7krmmebfrd7ks8cl4pc073kek39g.apps.googleusercontent.com',
+        '471656365436-nccusf9h82643uq9q6jogp4ib3rcclq2.apps.googleusercontent.com',
     }),
     onboardingConfig: {
       welcomeTitle: localized('Find your soul mate'),
