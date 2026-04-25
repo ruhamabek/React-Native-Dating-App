@@ -3,34 +3,52 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   ImageBackground,
   TouchableOpacity,
   Platform,
 } from 'react-native'
-import { useTheme } from '../../core/dopebase'
+import { Image } from 'expo-image'
+ import { useTheme } from '../../core/dopebase'
 import { size } from '../../core/helpers/devices'
 import * as Statics from '../../core/helpers/statics'
 
 const TinderCard = props => {
-  const { url, name, age, school, distance } = props
-
-  const { theme } = useTheme()
+  const { url, name, age, school, distance, bio } = props
+  const { theme, appearance } = useTheme()
+  const colors = theme.colors[appearance]
 
   return (
     <View style={[styles.container, styles.cardStyle]}>
-      <ImageBackground source={{ uri: url }} style={styles.news_image_style}>
-        <ImageBackground
-          style={styles.name_info_container}
-          source={theme.icons.BackgroundLayer}>
+      <ImageBackground
+        source={{ uri: url }}
+        style={styles.news_image_style}
+        imageStyle={styles.imageRadius}
+      >
+        {/* Story indicator dots at top */}
+        <View style={styles.storyIndicatorContainer}>
+          <View style={styles.storyIndicatorActive} />
+          <View style={styles.storyIndicatorInactive} />
+          <View style={styles.storyIndicatorInactive} />
+        </View>
+
+        {/* Dark scrim at bottom */}
+        <View style={styles.gradientScrim}>
           <View style={styles.userDetailContainer}>
-            <Text style={styles.name_style}>
-              {name ? name : ' '}, {age ? age : ' '}
-            </Text>
-            <View style={styles.txtBox}>
-              <Image style={styles.icon} source={theme.icons.schoolIcon} />
-              <Text style={styles.label}>{school ? school : ' '}</Text>
+            <View style={styles.nameRow}>
+              <Text style={styles.name_style}>
+                {name ? name : ' '}, {age ? age : ' '}
+              </Text>
             </View>
+            {bio ? (
+              <Text style={styles.bioQuote} numberOfLines={2}>
+                "{bio}"
+              </Text>
+            ) : (
+              <View style={styles.txtBox}>
+                <Image style={styles.icon} source={theme.icons.schoolIcon} />
+                <Text style={styles.label}>{school ? school : ' '}</Text>
+              </View>
+            )}
             {distance && (
               <View style={styles.txtBox}>
                 <Image style={styles.icon} source={theme.icons.markerIcon} />
@@ -41,18 +59,19 @@ const TinderCard = props => {
           <View style={styles.undoIconContainer}>
             <TouchableOpacity
               onPress={props.undoSwipe}
-              style={styles.roundUndoIconContainer}>
-              <Image style={styles.icon} source={theme.icons.undo} />
+              style={styles.roundUndoIconContainer}
+            >
+              <Image style={styles.undoIcon} source={theme.icons.undo} />
             </TouchableOpacity>
           </View>
-        </ImageBackground>
+        </View>
       </ImageBackground>
     </View>
   )
 }
 
-const undoIconSize = size(20)
-const undoIconContainerSize = undoIconSize + 8
+const undoIconSize = size(18)
+const undoIconContainerSize = undoIconSize + 12
 
 const styles = StyleSheet.create({
   container: {
@@ -67,59 +86,107 @@ const styles = StyleSheet.create({
     width: Platform.OS === 'web' ? 1024 : Statics.DEVICE_WIDTH,
   },
   news_image_style: {
-    width: Platform.OS === 'web' ? 1024 - 25 : Statics.DEVICE_WIDTH - size(25),
+    width: Platform.OS === 'web' ? 1024 - 40 : Statics.DEVICE_WIDTH - size(40),
     height: Statics.DEVICE_HEIGHT * 0.68,
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    marginHorizontal: size(10),
+    marginHorizontal: size(18),
     marginTop: 0,
-    borderRadius: 15,
     overflow: 'hidden',
-    backgroundColor: 'white',
+    backgroundColor: '#1A1A1A',
   },
-  name_info_container: {
-    padding: size(20),
+  imageRadius: {
+    borderRadius: 24,
+  },
+  // Story indicator bars at top of card
+  storyIndicatorContainer: {
+    position: 'absolute',
+    top: 12,
+    left: 16,
+    right: 16,
     flexDirection: 'row',
+    gap: 4,
+    zIndex: 10,
+  },
+  storyIndicatorActive: {
+    flex: 1,
+    height: 3,
+    borderRadius: 2,
+    backgroundColor: '#FFFFFF',
+  },
+  storyIndicatorInactive: {
+    flex: 1,
+    height: 3,
+    borderRadius: 2,
+    backgroundColor: 'rgba(255,255,255,0.35)',
+  },
+   gradientScrim: {
+    padding: size(20),
+    paddingBottom: size(24),
+    flexDirection: 'row',
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    backgroundColor: 'rgba(0,0,0,0.55)',
   },
   userDetailContainer: {
     flex: 4,
+  },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
   },
   undoIconContainer: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    paddingBottom: 7,
+    paddingBottom: 4,
   },
   roundUndoIconContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: undoIconContainerSize + 7,
-    width: undoIconContainerSize + 7,
-    borderRadius: Math.floor(undoIconContainerSize + 7 / 2),
-    backgroundColor: '#e95c6f',
+    height: undoIconContainerSize,
+    width: undoIconContainerSize,
+    borderRadius: undoIconContainerSize / 2,
+    backgroundColor: '#E31B23',
     zIndex: 2,
   },
   name_style: {
-    fontSize: size(24),
+    fontSize: size(28),
     fontWeight: '700',
     color: 'white',
-    marginBottom: size(5),
+    marginBottom: size(4),
     backgroundColor: 'transparent',
+    letterSpacing: -0.3,
+  },
+  bioQuote: {
+    fontSize: size(14),
+    fontWeight: '400',
+    color: 'rgba(255,255,255,0.85)',
+    fontStyle: 'italic',
+    marginTop: size(4),
+    backgroundColor: 'transparent',
+    lineHeight: size(20),
   },
   txtBox: {
-    marginTop: size(3),
+    marginTop: size(4),
     flexDirection: 'row',
+    alignItems: 'center',
   },
   icon: {
-    width: size(20),
-    height: size(20),
+    width: size(16),
+    height: size(16),
+    tintColor: 'rgba(255,255,255,0.8)',
+  },
+  undoIcon: {
+    width: size(16),
+    height: size(16),
     tintColor: 'white',
   },
   label: {
-    paddingLeft: size(10),
-    fontSize: size(16),
+    paddingLeft: size(6),
+    fontSize: size(14),
     fontWeight: '400',
-    color: 'white',
+    color: 'rgba(255,255,255,0.85)',
     backgroundColor: 'transparent',
   },
   detailBtn: {

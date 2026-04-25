@@ -5,15 +5,12 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  FlatList,
-  StatusBar,
+   StatusBar,
   SafeAreaView,
-  Platform,
-} from 'react-native'
-import Swiper from 'react-native-swiper'
-import * as ImagePicker from 'expo-image-picker'
+ } from 'react-native'
+ import * as ImagePicker from 'expo-image-picker'
 import { Image } from 'expo-image'
-import {
+ import {
   useActionSheet,
   useTheme,
   useTranslations,
@@ -24,6 +21,7 @@ import { storageAPI } from '../../core/media'
 import ActivityModal from '../../components/ActivityModal'
 import { logout } from '../../core/onboarding/redux/auth'
 import { setUserData } from '../../core/onboarding/redux/auth'
+import AtelierLogo from '../../components/AtelierLogo/AtelierLogo'
 import dynamicStyles from './styles'
 import { useIap } from '../../core/inAppPurchase/context'
 import { useConfig } from '../../config'
@@ -33,6 +31,7 @@ const MyProfileScreen = props => {
   const { localized } = useTranslations()
   const { theme, appearance } = useTheme()
   const styles = dynamicStyles(theme, appearance)
+  const colors = theme.colors[appearance]
   const config = useConfig()
   const authManager = useAuth()
 
@@ -133,7 +132,6 @@ const MyProfileScreen = props => {
     if (index == 0) {
       onLaunchCamera()
     }
-
     if (index == 1) {
       onOpenPhotos()
     }
@@ -178,7 +176,7 @@ const MyProfileScreen = props => {
         console.log(error)
         alert(
           localized(
-            'An errord occurred while loading image. Please try again.',
+            'An error occurred while loading image. Please try again.',
           ),
         )
       })
@@ -198,7 +196,6 @@ const MyProfileScreen = props => {
         if (downloadURL) {
           updateUserData(downloadURL)
         } else {
-          // an error occurred
           setLoading(false)
         }
       })
@@ -210,7 +207,6 @@ const MyProfileScreen = props => {
 
   const updateUserInfo = data => {
     const tempUser = currentUser
-    // optimistically update the UI
     dispatch(setUserData({ user: { ...currentUser, ...data } }))
 
     updateUser(currentUser.id, data)
@@ -258,7 +254,6 @@ const MyProfileScreen = props => {
       if (photos) {
         photos.splice(selectedItemIndex, 1)
       }
-
       updateUserInfo({ photos })
       updatePhotos(photos)
     }
@@ -269,190 +264,184 @@ const MyProfileScreen = props => {
     }
   }
 
-  const { firstName, lastName, profilePictureURL } = currentUser
+  const { firstName, lastName, profilePictureURL, bio, school, age } = currentUser
   const userLastName = currentUser && lastName ? lastName : ' '
   const userfirstName = currentUser && firstName ? firstName : ' '
+
+  // Menu items configuration
+  const menuItems = [
+    {
+      label: localized('Account Details'),
+      icon: theme.icons.account,
+      iconTint: colors.crimson,
+      onPress: detail,
+    },
+    {
+      label: localized('Upgrade Account'),
+      icon: theme.icons.vip,
+      iconTint: '#FFB800',
+      onPress: onUpgradeAccount,
+    },
+    {
+      label: localized('Settings'),
+      icon: theme.icons.setting,
+      iconTint: colors.secondaryText,
+      onPress: setting,
+    },
+    {
+      label: localized('Contact Us'),
+      icon: theme.icons.callIcon,
+      iconTint: '#44D48C',
+      onPress: contact,
+    },
+    {
+      label: localized('Blocked Users'),
+      icon: theme.icons.blockedUser,
+      iconTint: colors.secondaryText,
+      onPress: blocked,
+    },
+  ]
 
   return (
     <View style={styles.MainContainer}>
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.MainContainer}>
-          <ScrollView style={styles.body}>
-            <View style={styles.profilePictureContainer}>
-              <ProfilePictureSelector
-                setProfilePictureFile={updateProfilePictureURL}
-                profilePictureURL={profilePictureURL}
-              />
-            </View>
-            <View style={styles.nameView}>
-              <Text style={styles.name}>
-                {userfirstName + ' ' + userLastName}
-              </Text>
-            </View>
-            <View
-              style={[
-                styles.myphotosView,
-                myphotos[0] && myphotos[0].length <= 3
-                  ? { height: Platform.OS === 'web' ? 320 : 158 }
-                  : { height: Platform.OS === 'web' ? 530 : 268 },
-              ]}>
-              <View style={styles.itemView}>
-                <Text style={styles.photoTitleLabel}>
-                  {localized('My Photos')}
-                </Text>
-              </View>
-              <Swiper
-                removeClippedSubviews={false}
-                showsButtons={false}
-                loop={false}
-                paginationStyle={{ top: -230, left: null, right: 0 }}
-                dot={<View style={styles.inactiveDot} />}
-                activeDot={
-                  <View
-                    style={{
-                      backgroundColor: '#db6470',
-                      width: 8,
-                      height: 8,
-                      borderRadius: 4,
-                      marginLeft: 3,
-                      marginRight: 3,
-                      marginTop: 3,
-                      marginBottom: 3,
-                    }}
-                  />
-                }>
-                {myphotos.map((photos, i) => (
-                  <View key={'photos' + i} style={styles.slide}>
-                    <View style={styles.slideActivity}>
-                      <FlatList
-                        horizontal={false}
-                        numColumns={Platform.OS === 'web' ? 3 : 3}
-                        data={photos}
-                        scrollEnabled={false}
-                        renderItem={({ item, index }) =>
-                          item.add ? (
-                            <TouchableOpacity
-                              key={'item' + index}
-                              style={[
-                                styles.myphotosItemView,
-                                {
-                                  backgroundColor:
-                                    theme.colors[appearance].primaryForeground,
-                                },
-                              ]}
-                              onPress={onSelectAddPhoto}>
-                              <Image
-                                style={styles.icon}
-                                source={theme.icons.cameraFilled}
-                              />
-                            </TouchableOpacity>
-                          ) : (
-                            <TouchableOpacity
-                              key={'item' + index}
-                              style={styles.myphotosItemView}
-                              onPress={() => onSelectDelPhoto(i * 6 + index)}>
-                              <Image
-                                style={{ width: '100%', height: '100%' }}
-                                source={{ uri: item }}
-                              />
-                            </TouchableOpacity>
-                          )
-                        }
+          <AtelierLogo />
+          <ScrollView
+            style={styles.body}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 100 }}
+          >
+             <View style={styles.heroContainer}>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => {
+                  showActionSheetWithOptions(
+                    {
+                      title: localized('Change Profile Photo'),
+                      options: [
+                        localized('Launch Camera'),
+                        localized('Open Photo Gallery'),
+                        localized('Cancel'),
+                      ],
+                      cancelButtonIndex: 2,
+                    },
+                    index => {
+                      if (index == 0) onLaunchCamera()
+                      if (index == 1) onOpenPhotos()
+                    },
+                  )
+                }}
+              >
+                <Image
+                  source={{ uri: profilePictureURL }}
+                  style={styles.heroImage}
+                  contentFit="cover"
+                />
+                <View
+                  style={styles.heroGradient}
+                >
+                  <Text style={styles.heroName}>
+                    {userfirstName}{userLastName !== ' ' ? ' ' + userLastName : ''}{age ? ', ' + age : ''}
+                  </Text>
+                  {school && (
+                    <View style={styles.locationRow}>
+                      <Image
+                        style={styles.locationIcon}
+                        source={theme.icons.markerIcon}
                       />
+                      <Text style={styles.locationText}>{school}</Text>
                     </View>
-                  </View>
-                ))}
-              </Swiper>
+                  )}
+                </View>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.optionView} onPress={detail}>
-              <View style={styles.iconView}>
-                <Image
-                  style={{
-                    width: 25,
-                    height: 25,
-                    tintColor: '#687cf0',
-                    contentFit: 'cover',
-                  }}
-                  source={theme.icons.account}
-                />
-              </View>
-              <View style={styles.textView}>
-                <Text style={styles.textLabel}>
-                  {localized('Account Details')}
+
+             {bio ? (
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>
+                  {localized('About Me')}
                 </Text>
+                <Text style={styles.bioText}>{bio}</Text>
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.optionView}
-              onPress={onUpgradeAccount}>
-              <View style={styles.iconView}>
-                <Image
-                  style={{
-                    width: 25,
-                    height: 25,
-                    contentFit: 'cover',
-                  }}
-                  source={theme.icons.vip}
-                />
+            ) : null}
+
+            {/* ─── My Photos / Moments ─── */}
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>
+                {localized('Moments')}
+              </Text>
+              <View style={styles.photosGrid}>
+                {myphotos.map((photos, pageIndex) =>
+                  photos.map((item, index) =>
+                    item.add ? (
+                      <TouchableOpacity
+                        key={'add-' + pageIndex + '-' + index}
+                        style={[
+                          styles.myphotosItemView,
+                          styles.addPhotoButton,
+                        ]}
+                        onPress={onSelectAddPhoto}
+                      >
+                        <Image
+                          style={styles.addPhotoIcon}
+                          source={theme.icons.cameraFilled}
+                        />
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity
+                        key={'photo-' + pageIndex + '-' + index}
+                        style={styles.myphotosItemView}
+                        onPress={() =>
+                          onSelectDelPhoto(pageIndex * 6 + index)
+                        }
+                      >
+                        <Image
+                          style={{ width: '100%', height: '100%' }}
+                          source={{ uri: item }}
+                          contentFit="cover"
+                        />
+                      </TouchableOpacity>
+                    ),
+                  ),
+                )}
               </View>
-              <View style={styles.textView}>
-                <Text style={styles.textLabel}>
-                  {localized('Upgrade Account')}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionView} onPress={setting}>
-              <View style={styles.iconView}>
-                <Image
-                  style={{
-                    width: 25,
-                    height: 25,
-                    tintColor: '#9a91c4',
-                    contentFit: 'cover',
-                  }}
-                  source={theme.icons.setting}
-                />
-              </View>
-              <View style={styles.textView}>
-                <Text style={styles.textLabel}>{localized('Settings')}</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionView} onPress={contact}>
-              <View style={styles.iconView}>
-                <Image
-                  style={{
-                    width: 25,
-                    height: 25,
-                    tintColor: '#88e398',
-                    contentFit: 'cover',
-                  }}
-                  source={theme.icons.callIcon}
-                />
-              </View>
-              <View style={styles.textView}>
-                <Text style={styles.textLabel}>{localized('Contact Us')}</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionView} onPress={blocked}>
-              <View style={styles.iconView}>
-                <Image
-                  style={{
-                    width: 25,
-                    height: 25,
-                    tintColor: '#9a91c4',
-                    contentFit: 'cover',
-                  }}
-                  source={theme.icons.blockedUser}
-                />
-              </View>
-              <View style={styles.textView}>
-                <Text style={styles.textLabel}>
-                  {localized('Blocked Users')}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.logoutView} onPress={onLogout}>
-              <Text style={styles.textLabel}>{localized('Logout')}</Text>
+            </View>
+
+             <View style={styles.menuContainer}>
+              {menuItems.map((item, index) => (
+                <TouchableOpacity
+                  key={'menu-' + index}
+                  style={styles.menuItem}
+                  onPress={item.onPress}
+                  activeOpacity={0.7}
+                >
+                  <View
+                    style={[
+                      styles.menuIconContainer,
+                      { backgroundColor: item.iconTint + '15' },
+                    ]}
+                  >
+                    <Image
+                      style={[
+                        styles.menuIcon,
+                        { tintColor: item.iconTint },
+                      ]}
+                      source={item.icon}
+                    />
+                  </View>
+                  <Text style={styles.menuLabel}>{item.label}</Text>
+                  <Text style={styles.menuChevron}>›</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+             <TouchableOpacity
+              style={styles.logoutView}
+              onPress={onLogout}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.logoutText}>{localized('Logout')}</Text>
             </TouchableOpacity>
           </ScrollView>
 

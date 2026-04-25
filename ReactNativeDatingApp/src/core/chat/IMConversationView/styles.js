@@ -10,36 +10,55 @@ const dynamicStyles = (theme, appearance) => {
     userImageContainer: {
       borderWidth: 0,
     },
-    chatsChannelContainer: {
-      // flex: 1,
-      padding: 10,
-    },
     chatItemContainer: {
       flexDirection: 'row',
-      marginBottom: 20,
+      paddingHorizontal: 20,
+      paddingVertical: 14,
+      alignItems: 'center',
     },
     chatItemContent: {
       flex: 1,
-      alignSelf: 'center',
-      marginLeft: 10,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginLeft: 16,
+    },
+    chatItemMiddle: {
+      flex: 1,
+      marginRight: 12,
+    },
+    chatItemRight: {
+      alignItems: 'flex-end',
+      justifyContent: 'center',
     },
     chatFriendName: {
       color: colorSet.primaryText,
-      fontSize: 17,
-      fontWeight: '500',
-    },
-    content: {
-      flexDirection: 'row',
-      marginTop: 5,
+      fontSize: 16,
+      fontWeight: '700',
+      marginBottom: 6,
     },
     message: {
-      flex: 2,
       color: colorSet.secondaryText,
-      fontWeight: '500',
+      fontSize: 14,
     },
     unReadmessage: {
-      fontWeight: 'bold',
       color: colorSet.primaryText,
+    },
+    timestamp: {
+      color: '#666666',
+      fontSize: 10,
+      fontWeight: '700',
+      letterSpacing: 0.5,
+      textTransform: 'uppercase',
+      marginBottom: 8,
+    },
+    timestampUnread: {
+      color: colorSet.crimson || '#E31B23',
+    },
+    unreadBadge: {
+      width: 10,
+      height: 10,
+      borderRadius: 5,
+      backgroundColor: colorSet.crimson || '#E31B23',
     },
   })
 }

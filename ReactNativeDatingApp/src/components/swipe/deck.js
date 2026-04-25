@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { useSelector } from 'react-redux'
 import Swiper from 'react-native-deck-swiper'
-import { useTranslations } from '../../core/dopebase'
+import { useTranslations, useTheme } from '../../core/dopebase'
 import TinderCard from './tinder_card'
 import BottomTabBar from './bottom_tab_bar'
 import CardDetailsView from './CardDetailsView/CardDetailsView'
@@ -26,7 +26,6 @@ const Deck = props => {
     onSwipe,
     showMode,
     onAllCardsSwiped,
-    // isPlanActive,
     setSubscriptionVisible,
     renderEmptyState,
     renderNewMatch,
@@ -34,6 +33,8 @@ const Deck = props => {
   } = props
 
   const { localized } = useTranslations()
+  const { theme, appearance } = useTheme()
+  const colors = theme.colors[appearance]
   const isPlanActive = useSelector(state => state.inAppPurchase.isPlanActive)
 
   const useSwiper = useRef(null)
@@ -58,7 +59,6 @@ const Deck = props => {
 
   const handleSwipe = (type, index) => {
     const currentDeckItem = data[index]
-
     currentDeckIndex.current = index
 
     if (canUserSwipe || hasActivePlan.current) {
@@ -93,13 +93,11 @@ const Deck = props => {
   const undoSwipe = () => {
     if (!hasActivePlan.current) {
       requestUpgrade()
-
       return
     }
 
     useSwiper.current.swipeBack(index => {
       const prevDeckItem = data[index - 1]
-
       currentDeckIndex.current = index
       onUndoSwipe(prevDeckItem)
     })
@@ -151,6 +149,7 @@ const Deck = props => {
           age={item.age}
           school={item.school}
           distance={item.distance}
+          bio={item.bio}
           setShowMode={setShowMode}
           undoSwipe={undoSwipe}
         />
@@ -220,7 +219,7 @@ const Deck = props => {
           cards={data}
           renderCard={renderCard}
           cardIndex={0}
-          backgroundColor="white"
+          backgroundColor="transparent"
           stackSize={2}
           verticalSwipe={true}
           infinite={false}
@@ -235,14 +234,14 @@ const Deck = props => {
           overlayLabels={{
             left: {
               title: 'NOPE',
-              element: renderOverlayLabel('NOPE', '#E5566D'),
+              element: renderOverlayLabel('NOPE', '#E31B23'),
               style: {
                 wrapper: styles.overlayWrapper,
               },
             },
             right: {
               title: 'LIKE',
-              element: renderOverlayLabel('LIKE', '#4CCC93'),
+              element: renderOverlayLabel('LIKE', '#44D48C'),
               style: {
                 wrapper: {
                   ...styles.overlayWrapper,
@@ -264,7 +263,12 @@ const Deck = props => {
       {showMode == 1 && data[currentDeckIndex.current] && (
         <Modal animationType={'slide'}>
           <View style={styles.cardDetailContainer}>
-            <View style={styles.cardDetailL}>
+            <View
+              style={[
+                styles.cardDetailL,
+                { backgroundColor: colors.primaryBackground },
+              ]}
+            >
               {renderCardDetail(data[currentDeckIndex.current])}
             </View>
           </View>
@@ -274,7 +278,8 @@ const Deck = props => {
         <Modal
           transparent={false}
           visible={showMode == 2 ? true : false}
-          animationType={'slide'}>
+          animationType={'slide'}
+        >
           <View style={styles.newMatch}>{renderNewMatch()}</View>
         </Modal>
       )}
@@ -291,13 +296,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
-    borderWidth: 2,
-    borderRadius: 10,
+    borderWidth: 3,
+    borderRadius: 16,
   },
   overlayLabelText: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: '800',
     padding: 10,
+    letterSpacing: 2,
   },
   swiperContainer: {
     marginLeft: -20,
@@ -314,20 +320,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0,0,0,0.6)',
   },
   cardDetailL: {
-    // position: 'absolute',
-    // bottom: 0,
     width: Platform.OS === 'web' ? 1024 : SCREEN_WIDTH,
     height: SCREEN_HEIGHT * 0.95,
-    // paddingBottom: size(100),
-    backgroundColor: 'white',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    overflow: 'hidden',
   },
   bottomTabBarContainer: {
-    // marginBottom: -8
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 90 : 75,
     width: '95%',
     alignSelf: 'center',
   },
@@ -343,7 +347,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: Platform.OS === 'web' ? 1024 : SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: 'white',
+    backgroundColor: '#000000',
   },
 })
 

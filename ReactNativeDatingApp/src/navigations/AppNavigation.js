@@ -1,8 +1,12 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { useSelector } from 'react-redux'
-import { useTheme, TouchableIcon } from '../core/dopebase'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+
+import {
+  useTheme,
+  TouchableIcon,
+} from '../core/dopebase'
 import {
   IMEditProfileScreen,
   IMUserSettingsScreen,
@@ -23,7 +27,14 @@ import {
   WelcomeScreen,
 } from '../core/onboarding'
 import useNotificationOpenedApp from '../core/helpers/notificationOpenedApp'
-import { Platform, SafeAreaView, View } from 'react-native'
+import {
+  Platform,
+  SafeAreaView,
+  View,
+  StyleSheet,
+} from 'react-native'
+
+const Tab = createBottomTabNavigator()
 
 const LoginStackNavigator = createStackNavigator()
 const LoginStack = () => {
@@ -47,6 +58,7 @@ const LoginStack = () => {
   )
 }
 
+// ─── Profile Stack (sub-screens within Profile tab) ────────────────
 const MyProfileStackNavigator = createStackNavigator()
 const MyProfileStack = () => {
   const { theme, appearance } = useTheme()
@@ -54,61 +66,39 @@ const MyProfileStack = () => {
   return (
     <MyProfileStackNavigator.Navigator
       initialRouteName="MyProfile"
-      screenOptions={{ headerTitleAlign: 'center' }}
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: theme.colors[appearance].primaryBackground,
+          borderBottomWidth: 0,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: theme.colors[appearance].primaryText,
+      }}
     >
       <MyProfileStackNavigator.Screen
         name="MyProfile"
-        options={({ navigation }) => ({
-          headerTitle: () => (
-            <TouchableIcon
-              imageStyle={{ tintColor: '#d1d7df' }}
-              iconSource={theme.icons.fireIcon}
-              onPress={() => navigation.navigate('Swipe')}
-            />
-          ),
-          headerRight: () => (
-            <TouchableIcon
-              imageStyle={{ tintColor: '#d1d7df' }}
-              iconSource={theme.icons.conversations}
-              onPress={() => {
-                //navigation.pop();
-                navigation.navigate('Matches')
-              }}
-            />
-          ),
-          headerLeft: () => (
-            <TouchableIcon
-              imageStyle={{
-                tintColor: theme.colors[appearance].primaryForeground,
-              }}
-              iconSource={theme.icons.userProfile}
-            />
-          ),
-          headerStyle: {
-            backgroundColor: theme.colors[appearance].primaryBackground,
-            borderBottomWidth: 0,
-          },
-          headerTintColor: theme.colors[appearance].primaryText,
-        })}
+        options={{ headerShown: false }}
         component={MyProfileScreen}
       />
       <MyProfileStackNavigator.Screen
-        options={{ headerBackTitle: 'Back' }}
+        options={{ headerBackTitle: 'Back', title: 'Edit Profile' }}
         name="AccountDetails"
         component={IMEditProfileScreen}
       />
       <MyProfileStackNavigator.Screen
-        options={{ headerBackTitle: 'Back' }}
+        options={{ headerBackTitle: 'Back', title: 'Settings' }}
         name="Settings"
         component={IMUserSettingsScreen}
       />
       <MyProfileStackNavigator.Screen
-        options={{ headerBackTitle: 'Back' }}
+        options={{ headerBackTitle: 'Back', title: 'Contact Us' }}
         name="ContactUs"
         component={IMContactUsScreen}
       />
       <MyProfileStackNavigator.Screen
-        options={{ headerBackTitle: 'Back' }}
+        options={{ headerBackTitle: 'Back', title: 'Blocked Users' }}
         name="BlockedUsers"
         component={IMBlockedUsersScreen}
       />
@@ -116,6 +106,7 @@ const MyProfileStack = () => {
   )
 }
 
+// ─── Conversations Stack ───────────────────────────────────────────
 const ConversationsStackNavigator = createStackNavigator()
 const ConversationsStack = () => {
   return (
@@ -132,108 +123,137 @@ const ConversationsStack = () => {
   )
 }
 
+// ─── Home/Swipe Stack ──────────────────────────────────────────────
+const HomeStackNavigator = createStackNavigator()
+const HomeStack = () => {
+  const { theme, appearance } = useTheme()
+  return (
+    <HomeStackNavigator.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <HomeStackNavigator.Screen name="SwipeHome" component={HomeScreen} />
+    </HomeStackNavigator.Navigator>
+  )
+}
+
+ const CrimsonTabBar = ({ state, descriptors, navigation }) => {
+  const { theme, appearance } = useTheme()
+  const colors = theme.colors[appearance]
+
+  const tabIcons = {
+    Swipe: { icon: theme.icons.fireIcon, label: 'Discover' },
+    Matches: { icon: theme.icons.conversations, label: 'Messages' },
+    MyProfileStack: { icon: theme.icons.userProfile, label: 'Profile' },
+  }
+
+  return (
+    <View style={tabBarStyles.outerContainer}>
+      <View
+        style={[
+          tabBarStyles.container,
+          {
+            backgroundColor: colors.tabBarBackground,
+            borderColor: colors.tabBarBorder,
+          },
+        ]}
+      >
+        {state.routes.map((route, index) => {
+          const isFocused = state.index === index
+          const { icon, label } = tabIcons[route.name] || {
+            icon: theme.icons.home,
+            label: route.name,
+          }
+
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            })
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name, route.params)
+            }
+          }
+
+          return (
+            <TouchableIcon
+              key={route.key}
+              imageStyle={{
+                tintColor: isFocused
+                  ? colors.activeTabTint
+                  : colors.inactiveTabTint,
+                width: 24,
+                height: 24,
+              }}
+              iconSource={icon}
+              onPress={onPress}
+              containerStyle={tabBarStyles.tabItem}
+            />
+          )
+        })}
+      </View>
+    </View>
+  )
+}
+
+const tabBarStyles = StyleSheet.create({
+  outerContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingBottom: Platform.OS === 'ios' ? 24 : 12,
+    paddingHorizontal: 20,
+  },
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: 400,
+    height: 64,
+    borderRadius: 32,
+    borderWidth: 1,
+    paddingHorizontal: 8,
+    // Glassmorphism shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.08,
+    shadowRadius: 24,
+    elevation: 12,
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+  },
+})
+
+// ─── Main Tab Navigator ────────────────────────────────────────────
 const doNotShowHeaderOption = {
   headerShown: false,
 }
 
-const DrawerStackNavigator = createStackNavigator()
-const DrawerStack = () => {
-  const { theme, appearance } = useTheme()
+const TabNavigator = () => {
   return (
-    <DrawerStackNavigator.Navigator
+    <Tab.Navigator
+      tabBar={(props) => <CrimsonTabBar {...props} />}
       screenOptions={{
-        headerTitleAlign: 'center',
-        headerMode: 'float',
-        sceneContainerStyle: { maxWidth: 1024, height: '100%', width: '100%' },
+        headerShown: false,
       }}
-      initialRouteName="Swipe"
     >
-      <DrawerStackNavigator.Screen
-        options={({ navigation }) => ({
-          headerTitle: () => (
-            <TouchableIcon
-              imageStyle={{
-                tintColor: theme.colors[appearance].primaryForeground,
-              }}
-              iconSource={theme.icons.fireIcon}
-              onPress={() => navigation.navigate('Swipe')}
-            />
-          ),
-          headerRight: () => (
-            <TouchableIcon
-              imageStyle={{ tintColor: '#d1d7df' }}
-              iconSource={theme.icons.conversations}
-              onPress={() => navigation.navigate('Matches')}
-            />
-          ),
-          headerLeft: () => (
-            <TouchableIcon
-              imageStyle={{ tintColor: '#d1d7df' }}
-              iconSource={theme.icons.userProfile}
-              onPress={() => navigation.navigate('MyProfileStack')}
-            />
-          ),
-          headerStyle: {
-            backgroundColor: theme.colors[appearance].primaryBackground,
-            borderBottomWidth: 0,
-          },
-          headerTintColor: theme.colors[appearance].primaryText,
-        })}
-        name="Swipe"
-        component={HomeScreen}
-      />
-      <DrawerStackNavigator.Screen
-        options={({ navigation }) => ({
-          headerTitle: () => (
-            <TouchableIcon
-              imageStyle={{ tintColor: '#d1d7df' }}
-              iconSource={theme.icons.fireIcon}
-              onPress={() => navigation.navigate('Swipe')}
-            />
-          ),
-          headerRight: () => (
-            <TouchableIcon
-              imageStyle={{
-                tintColor: theme.colors[appearance].primaryForeground,
-              }}
-              iconSource={theme.icons.conversations}
-              onPress={() => navigation.navigate('Matches')}
-            />
-          ),
-          headerLeft: () => (
-            <TouchableIcon
-              imageStyle={{ tintColor: '#d1d7df' }}
-              iconSource={theme.icons.userProfile}
-              onPress={() => {
-                //navigation.pop();
-                navigation.navigate('MyProfileStack')
-              }}
-            />
-          ),
-          headerStyle: {
-            backgroundColor: theme.colors[appearance].primaryBackground,
-            borderBottomWidth: 0,
-          },
-          headerTintColor: theme.colors[appearance].primaryText,
-        })}
-        name="Matches"
-        component={ConversationsStack}
-      />
-
-      <DrawerStackNavigator.Screen
-        options={{ headerShown: false }}
-        name="MyProfileStack"
-        component={MyProfileStack}
-      />
-
-      <DrawerStackNavigator.Screen
-        name="AccountDetails"
-        component={IMEditProfileScreen}
-      />
-    </DrawerStackNavigator.Navigator>
+      <Tab.Screen name="Swipe" component={HomeStack} />
+      <Tab.Screen name="Matches" component={ConversationsStack} />
+      <Tab.Screen name="MyProfileStack" component={MyProfileStack} />
+    </Tab.Navigator>
   )
 }
 
+// ─── Main Stack (wraps tabs + chat screen) ─────────────────────────
 const MainStack = createStackNavigator()
 const MainStackNavigator = () => {
   useNotificationOpenedApp()
@@ -253,7 +273,7 @@ const MainStackNavigator = () => {
       <MainStack.Screen
         options={doNotShowHeaderOption}
         name="NavStack"
-        component={DrawerStack}
+        component={TabNavigator}
       />
       <MainStack.Screen
         options={{ headerBackTitle: 'Back' }}
@@ -264,6 +284,7 @@ const MainStackNavigator = () => {
   )
 }
 
+// ─── Root Navigator ────────────────────────────────────────────────
 const RootStack = createStackNavigator()
 const RootNavigator = () => {
   return (
@@ -301,9 +322,7 @@ const linking = {
     'http://localhost:19006',
   ],
   config: {
-    screens: {
-      // PersonalChat: 'channelxxx=:channel',
-    },
+    screens: {},
   },
 }
 
