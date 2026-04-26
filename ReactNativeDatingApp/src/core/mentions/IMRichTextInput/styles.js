@@ -46,7 +46,7 @@ const dynamicStyles = (theme, appearance) => {
     placeholderText: {
       position: 'absolute',
       top: 3,
-      color: 'rgba(0, 0, 0, 0.1)',
+      color: colorSet.secondaryText,
       fontSize: 16,
     },
   })

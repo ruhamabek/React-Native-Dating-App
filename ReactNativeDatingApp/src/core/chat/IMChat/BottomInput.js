@@ -117,7 +117,7 @@ const BottomInput = memo(props => {
       }),
     },
     placeholderText: {
-      color: theme.colors[appearance].secondaryText,
+      color: appearance === 'dark' ? '#aaaaaa' : theme.colors[appearance].secondaryText,
     },
     inputMaskText: {
       color: theme.colors[appearance].primaryText,
@@ -174,6 +174,7 @@ const BottomInput = memo(props => {
               initialValue={''}
               multiline={Platform.OS !== 'web'}
               placeholder={localized('Start typing...')}
+              placeholderTextColor={editorStyles.placeholderText.color}
               onChange={onChange}
               onPressOut={onTextPressOut}
               editable={!isAudioRecorderVisible}

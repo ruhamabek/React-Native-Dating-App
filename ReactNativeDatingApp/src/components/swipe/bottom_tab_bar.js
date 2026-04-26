@@ -11,99 +11,85 @@ import { useTheme } from '../../core/dopebase'
 import { size } from '../../core/helpers/devices'
 
 const BottomTabBar = props => {
-  const { theme } = useTheme()
+  const { theme, appearance } = useTheme()
+  const colors = theme.colors[appearance]
+
   const scaleValue2 = useRef(new Animated.Value(0))
   const scaleValue3 = useRef(new Animated.Value(0))
   const scaleValue4 = useRef(new Animated.Value(0))
 
-  const onDislikePress = () => {
-    scaleValue2.current.setValue(0)
-    Animated.timing(scaleValue2.current, {
+  const animateButton = (scaleRef, callback) => {
+    scaleRef.current.setValue(0)
+    Animated.timing(scaleRef.current, {
       toValue: 1,
       duration: 300,
       easing: Easing.easeOutBack,
+      useNativeDriver: true,
     }).start(() => {})
-    props.onDislikePressed()
+    callback()
   }
 
-  const onSuperLikePress = () => {
-    scaleValue3.current.setValue(0)
-    Animated.timing(scaleValue3.current, {
-      toValue: 1,
-      duration: 300,
-      easing: Easing.easeOutBack,
-    }).start(() => {})
-    props.onSuperLikePressed()
-  }
-
-  const onLikePress = () => {
-    scaleValue4.current.setValue(0)
-    Animated.timing(scaleValue4.current, {
-      toValue: 1,
-      duration: 300,
-      easing: Easing.easeOutBack,
-    }).start(() => {})
-    props.onLikePressed()
-  }
-
-  const getCardStyle2 = () => {
-    const scale = scaleValue2.current.interpolate({
+  const getCardStyle = (scaleRef) => {
+    const scale = scaleRef.current.interpolate({
       inputRange: [0, 0.5, 1],
       outputRange: [1, 0.7, 1],
     })
-
-    return {
-      transform: [{ scale }],
-    }
-  }
-
-  const getCardStyle3 = () => {
-    const scale = scaleValue3.current.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [1, 0.7, 1],
-    })
-
-    return {
-      transform: [{ scale }],
-    }
-  }
-
-  const getCardStyle4 = () => {
-    const scale = scaleValue4.current.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [1, 0.7, 1],
-    })
-
-    return {
-      transform: [{ scale }],
-    }
+    return { transform: [{ scale }] }
   }
 
   return (
     <View style={[styles.container, props.containerStyle]}>
-      <TouchableWithoutFeedback onPress={onDislikePress}>
+      {/* Dislike / X Button */}
+      <TouchableWithoutFeedback
+        onPress={() => animateButton(scaleValue2, props.onDislikePressed)}
+      >
         <Animated.View
           style={[
             styles.button_container,
-            getCardStyle2(),
+            styles.largeButton,
+            getCardStyle(scaleValue2),
             props.buttonContainerStyle,
-          ]}>
+          ]}
+        >
           <Image
             source={theme.icons.crossFilled}
-            style={[styles.large_icon, { tintColor: '#e8315b' }]}
+            style={[styles.large_icon, { tintColor: '#E31B23' }]}
           />
         </Animated.View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={onSuperLikePress}>
-        <Animated.View style={[styles.button_container, getCardStyle3()]}>
-          <Image source={theme.icons.starFilled} style={styles.small_icon} />
+
+      {/* Super Like / Star Button */}
+      <TouchableWithoutFeedback
+        onPress={() => animateButton(scaleValue3, props.onSuperLikePressed)}
+      >
+        <Animated.View
+          style={[
+            styles.button_container,
+            styles.smallButton,
+            getCardStyle(scaleValue3),
+          ]}
+        >
+          <Image
+            source={theme.icons.starFilled}
+            style={[styles.small_icon, { tintColor: '#3C94DC' }]}
+          />
         </Animated.View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={onLikePress}>
-        <Animated.View style={[styles.button_container, getCardStyle4()]}>
+
+      {/* Like / Heart Button */}
+      <TouchableWithoutFeedback
+        onPress={() => animateButton(scaleValue4, props.onLikePressed)}
+      >
+        <Animated.View
+          style={[
+            styles.button_container,
+            styles.largeButton,
+            getCardStyle(scaleValue4),
+          ]}
+        >
           <Image
             source={theme.icons.Like}
-            style={[styles.large_icon, { tintColor: '#44d48c' }]}
+            style={[styles.large_icon, { tintColor: '#44D48C' }]}
           />
         </Animated.View>
       </TouchableWithoutFeedback>
@@ -121,22 +107,38 @@ const styles = StyleSheet.create({
     marginBottom: size(35),
   },
   button_container: {
-    padding: size(15),
     backgroundColor: 'white',
-    borderRadius: 30,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#ddd',
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.06)',
     overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+     shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.04,
+    shadowRadius: 30,
+    elevation: 4,
+  },
+  largeButton: {
+    width: size(64),
+    height: size(64),
+    borderRadius: 32,
+    padding: size(15),
+  },
+  smallButton: {
+    width: size(52),
+    height: size(52),
+    borderRadius: 26,
+    padding: size(12),
   },
   small_icon: {
-    width: size(23),
-    height: size(23),
+    width: size(24),
+    height: size(24),
     contentFit: 'contain',
-    tintColor: '#3c94dc',
   },
   large_icon: {
-    width: size(33),
-    height: size(33),
+    width: size(30),
+    height: size(30),
     contentFit: 'contain',
   },
 })

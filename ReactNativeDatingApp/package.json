@@ -30,6 +30,7 @@
     "@react-native-firebase/firestore": "20.5.0",
     "@react-native-firebase/functions": "20.5.0",
     "@react-native-firebase/messaging": "20.5.0",
+    "@react-native-firebase/storage": "20.5.0",
     "@react-native-google-signin/google-signin": "13.0.1",
     "@react-native-picker/picker": "2.8.1",
     "@react-native/gradle-plugin": "0.75.3",
@@ -53,6 +54,7 @@
     "expo-image": "1.12.15",
     "expo-image-manipulator": "12.0.5",
     "expo-image-picker": "15.0.7",
+    "expo-linear-gradient": "^55.0.13",
     "expo-localization": "15.0.3",
     "expo-location": "17.0.1",
     "expo-module-scripts": "3.5.2",
@@ -63,7 +65,6 @@
     "expo-tracking-transparency": "4.0.2",
     "expo-video-thumbnails": "8.0.0",
     "expo-web-browser": "13.0.3",
-    "ffmpeg-kit-react-native": "6.0.2",
     "i18n-js": "4.4.3",
     "invert-color": "2.0.0",
     "lodash": "4.17.21",
@@ -148,5 +149,5 @@
     "react-test-renderer": "18.3.1",
     "remote-redux-devtools": "0.5.16"
   },
-  "packageManager": "yarn@4.4.1"
+  "packageManager": "pnpm@9.0.0"
 }

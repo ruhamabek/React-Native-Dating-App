@@ -19,6 +19,14 @@ const IMConversationView = memo(props => {
 
   let title = item.title
 
+   const getShortTime = (dateObj) => {
+    const defaultTime = timeFormat(dateObj)
+    if (typeof defaultTime === 'string') {
+      return defaultTime.replace(' minutes ago', 'M AGO').replace(' hours ago', 'H AGO').replace('yesterday', 'YESTERDAY')
+    }
+    return defaultTime
+  }
+
   return (
     <TouchableOpacity
       onPress={() => onChatItemPress(item)}
@@ -27,51 +35,33 @@ const IMConversationView = memo(props => {
         participants={
           item?.admins?.length
             ? item.participants
-            : item.participants.filter(value => {
-                return value?.id !== userID
-              })
+            : item.participants.filter(value => value?.id !== userID)
         }
       />
       <View style={styles.chatItemContent}>
-        <Text
-          style={[
-            styles.chatFriendName,
-            !markedAsRead && styles.unReadmessage,
-          ]}>
-          {title}
-        </Text>
-        <View style={styles.content}>
+        <View style={styles.chatItemMiddle}>
+          <Text style={styles.chatFriendName}>{title}</Text>
           <Text
             numberOfLines={1}
-            ellipsizeMode={'middle'}
+            ellipsizeMode={'tail'}
             style={[styles.message, !markedAsRead && styles.unReadmessage]}>
             <IMRichTextView
-              emailStyle={[
-                styles.message,
-                !markedAsRead && styles.unReadmessage,
-              ]}
-              phoneStyle={[
-                styles.message,
-                !markedAsRead && styles.unReadmessage,
-              ]}
-              hashTagStyle={[
-                styles.message,
-                !markedAsRead && styles.unReadmessage,
-              ]}
-              usernameStyle={[
-                styles.message,
-                !markedAsRead && styles.unReadmessage,
-              ]}>
+              emailStyle={[styles.message, !markedAsRead && styles.unReadmessage]}
+              phoneStyle={[styles.message, !markedAsRead && styles.unReadmessage]}
+              hashTagStyle={[styles.message, !markedAsRead && styles.unReadmessage]}
+              usernameStyle={[styles.message, !markedAsRead && styles.unReadmessage]}>
               {formatMessage(item, localized) || ' '}
             </IMRichTextView>
-            {' • '}
-            <Text
-              numberOfLines={1}
-              ellipsizeMode={'middle'}
-              style={[styles.message, !markedAsRead && styles.unReadmessage]}>
-              {timeFormat(item.updatedAt || item.createdAt)}
-            </Text>
           </Text>
+        </View>
+
+        <View style={styles.chatItemRight}>
+          <Text style={[styles.timestamp, !markedAsRead && styles.timestampUnread]}>
+            {getShortTime(item.updatedAt || item.createdAt)}
+          </Text>
+          {!markedAsRead && (
+            <View style={styles.unreadBadge} />
+          )}
         </View>
       </View>
     </TouchableOpacity>

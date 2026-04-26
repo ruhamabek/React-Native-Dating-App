@@ -8,6 +8,7 @@ import ActivityModal from '../../components/ActivityModal'
 import Deck from '../../components/swipe/deck'
 import NoMoreCard from '../../components/swipe/no_more_card'
 import NewMatch from '../../components/swipe/newMatch'
+import AtelierLogo from '../../components/AtelierLogo/AtelierLogo'
 import { SwipeTracker } from '../../api'
 import dynamicStyles from './styles'
 import { useIap } from '../../core/inAppPurchase/context'
@@ -51,9 +52,9 @@ const HomeScreen = props => {
     StatusBar.setHidden(false)
     swipeTracker.current.subscribeComputingStatus(onComputingStatusUpdate)
     swipeTracker.current.subscribeMatchesNotSeen(onMatchesNotSeenUpdate)
-  
+
     const subscription = AppState.addEventListener('change', handleAppStateChange)
-  
+
     handleShouldFetchRecommendations()
     getUserSwipeCount()
 
@@ -370,6 +371,7 @@ const HomeScreen = props => {
     <View style={styles.container}>
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.container}>
+          <AtelierLogo />
           {(recommendations.length > 0 || hasConsumedRecommendationsStream) && (
             <Deck
               data={recommendations}

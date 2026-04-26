@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Image, Keyboard, Platform, Text, View } from 'react-native'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import messaging from '@react-native-firebase/messaging'
 import {

@@ -2,28 +2,166 @@ import { StyleSheet, Platform, Dimensions } from 'react-native'
 
 const dynamicStyles = (theme, appearance) => {
   const width = Dimensions.get('window').width
+  const colors = theme.colors[appearance]
 
   return StyleSheet.create({
     MainContainer: {
       flex: 1,
-      backgroundColor: theme.colors[appearance].primaryBackground,
+      backgroundColor: colors.primaryBackground,
     },
     safeAreaContainer: {
       flex: 1,
-      backgroundColor: theme.colors[appearance].primaryBackground,
+      backgroundColor: colors.primaryBackground,
     },
     body: {
       width: '100%',
     },
-    photoView: {
-      top: Platform.OS === 'ios' ? '4%' : '1%',
-      width: 146,
-      height: 146,
-      borderRadius: 73,
-      backgroundColor: 'grey',
+
+    // ─── Hero Section ───
+    heroContainer: {
+      width: '100%',
+      height: 400,
       overflow: 'hidden',
-      alignSelf: 'center',
     },
+    heroImage: {
+      width: '100%',
+      height: 400,
+      backgroundColor: colors.grey3,
+    },
+    heroGradient: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      paddingHorizontal: 20,
+      paddingBottom: 24,
+      paddingTop: 80,
+      backgroundColor: 'rgba(0,0,0,0.45)',
+    },
+    heroName: {
+      fontSize: 28,
+      fontWeight: '700',
+      color: '#FFFFFF',
+      letterSpacing: -0.3,
+    },
+    locationRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: 6,
+    },
+    locationIcon: {
+      width: 14,
+      height: 14,
+      tintColor: 'rgba(255,255,255,0.8)',
+    },
+    locationText: {
+      fontSize: 14,
+      color: 'rgba(255,255,255,0.8)',
+      marginLeft: 4,
+    },
+
+    // ─── Sections ───
+    sectionContainer: {
+      paddingHorizontal: 20,
+      paddingTop: 24,
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: colors.primaryText,
+      marginBottom: 12,
+      letterSpacing: -0.2,
+    },
+    bioText: {
+      fontSize: 16,
+      color: colors.secondaryText,
+      lineHeight: 24,
+    },
+
+    // ─── Photos Grid ───
+    photosGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 8,
+    },
+    myphotosItemView: {
+      width: Platform.OS === 'web' ? 160 : Math.floor((width - 56) / 3),
+      height: Platform.OS === 'web' ? 160 : Math.floor((width - 56) / 3),
+      borderRadius: 16,
+      overflow: 'hidden',
+      backgroundColor: colors.grey3,
+    },
+    addPhotoButton: {
+      backgroundColor: colors.crimson + '15',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 2,
+      borderColor: colors.crimson + '30',
+      borderStyle: 'dashed',
+    },
+    addPhotoIcon: {
+      width: 32,
+      height: 32,
+      tintColor: colors.crimson,
+    },
+
+    // ─── Menu Items ───
+    menuContainer: {
+      paddingHorizontal: 20,
+      paddingTop: 28,
+    },
+    menuItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 14,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: colors.hairline,
+    },
+    menuIconContainer: {
+      width: 40,
+      height: 40,
+      borderRadius: 12,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 14,
+    },
+    menuIcon: {
+      width: 20,
+      height: 20,
+      contentFit: 'contain',
+    },
+    menuLabel: {
+      flex: 1,
+      fontSize: 16,
+      color: colors.primaryText,
+      fontWeight: '500',
+    },
+    menuChevron: {
+      fontSize: 22,
+      color: colors.secondaryText,
+      fontWeight: '300',
+    },
+
+    // ─── Logout ───
+    logoutView: {
+      marginTop: 28,
+      marginHorizontal: 20,
+      marginBottom: 40,
+      padding: 16,
+      borderRadius: 16,
+      backgroundColor: colors.crimson + '10',
+      borderWidth: 1,
+      borderColor: colors.crimson + '25',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    logoutText: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: colors.crimson,
+    },
+
+    // ─── Legacy (kept for compatibility) ───
     profilePictureContainer: {
       marginTop: 30,
     },
@@ -36,89 +174,11 @@ const dynamicStyles = (theme, appearance) => {
     name: {
       fontSize: 21,
       fontWeight: 'bold',
-      // marginRight: 10,
-      color: theme.colors[appearance].primaryText,
+      color: colors.primaryText,
       padding: 10,
-    },
-    myphotosView: {
-      width: '100%',
-      paddingHorizontal: 12,
-      marginTop: 20,
-      marginBottom: 15,
-    },
-    itemView: {
-      width: '100%',
-      paddingVertical: 2,
-      marginVertical: 2,
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems: 'flex-end',
-      marginBottom: 11,
-    },
-    slide: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    slideActivity: {
-      height: Platform.OS === 'web' ? 420 : '100%',
-      width: '90%',
-    },
-    myphotosItemView: {
-      width: Platform.OS === 'web' ? 200 : Math.floor(width * 0.24),
-      height: Platform.OS === 'web' ? 200 : Math.floor(width * 0.24),
-      marginHorizontal: 8,
-      marginVertical: 8,
-      borderRadius: 15,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'grey',
-      overflow: 'hidden',
-    },
-    optionView: {
-      width: '100%',
-      marginVertical: 9,
-      paddingHorizontal: 12,
-      flexDirection: 'row',
-    },
-    icon: {
-      height: 40,
-      width: 40,
-    },
-    iconView: {
-      flex: 0.2,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    textView: {
-      flex: 0.8,
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-    },
-    textLabel: {
-      fontSize: 16,
-      color: theme.colors[appearance].primaryText,
-    },
-    photoTitleLabel: {
-      fontWeight: '500',
-      fontSize: 17,
-      paddingLeft: 22,
-      color: theme.colors[appearance].primaryText,
-    },
-    logoutView: {
-      width: '92%',
-      marginTop: 20,
-      marginBottom: 50,
-      marginHorizontal: 12,
-      padding: 10,
-      borderRadius: 10,
-      borderWidth: 1,
-      borderColor: theme.colors[appearance].grey0,
-      justifyContent: 'center',
-      alignItems: 'center',
     },
     inactiveDot: {
-      backgroundColor: theme.colors[appearance].grey6,
+      backgroundColor: colors.grey6,
       width: 8,
       height: 8,
       borderRadius: 4,

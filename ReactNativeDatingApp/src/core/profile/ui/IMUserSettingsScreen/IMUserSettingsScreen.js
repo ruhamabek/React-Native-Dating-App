@@ -1,7 +1,7 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react'
 import { BackHandler } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { useFocusEffect } from '@react-navigation/core'
+import { useFocusEffect } from '@react-navigation/native'
 import { useTheme, useTranslations } from '../../../dopebase'
 import { setUserData } from '../../../onboarding/redux/auth'
 import { updateUser } from '../../../users'

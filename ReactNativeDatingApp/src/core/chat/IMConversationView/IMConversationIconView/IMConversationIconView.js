@@ -1,11 +1,11 @@
-import React, { useState, memo } from 'react'
+import { useState, memo } from 'react'
 import { View } from 'react-native'
 import { Image } from 'expo-image'
 import { useTheme } from '../../../dopebase'
 import dynamicStyles from './styles'
 
 const defaultAvatar =
-  'https://www.iosapptemplates.com/wp-content/uploads/2019/06/empty-avatar.jpg'
+  'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
 
 const IMConversationIconView = props => {
   const { participants, imageStyle, style } = props

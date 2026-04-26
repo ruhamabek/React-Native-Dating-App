@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useCallback } from 'react'
 import { BackHandler, Linking } from 'react-native'
-import { useFocusEffect } from '@react-navigation/core'
+import { useFocusEffect } from '@react-navigation/native'
 import { useTheme, useTranslations } from '../../../dopebase'
 import IMFormComponent from '../IMFormComponent/IMFormComponent'
 

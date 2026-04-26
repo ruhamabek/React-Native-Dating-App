@@ -2,7 +2,6 @@ import { Platform } from 'react-native'
 import * as _ from 'lodash'
 import * as FileSystem from 'expo-file-system'
 import * as VideoThumbnails from 'expo-video-thumbnails'
-import { FFmpegKit } from 'ffmpeg-kit-react-native'
 import * as ImageManipulator from 'expo-image-manipulator'
 import 'react-native-get-random-values'
 import { v4 as uuid } from 'uuid'
@@ -56,20 +55,9 @@ const compressVideo = async sourceUri => {
 
   await ensureDirExists(BASE_DIR)
 
-  const processedUri = `${BASE_DIR}${uuid()}.mp4`
   return new Promise(resolve => {
-    FFmpegKit.execute(`-i ${sourceUri} -c:v mpeg4 ${processedUri}`).then(
-      async session => {
-        FileSystem.getInfoAsync(processedUri).then(fileInfo => {
-          console.log(
-            'compressed video to size ' + fileInfo.size / (1024 * 1024) + 'M',
-          )
-          console.log(processedUri)
-        })
-
-        resolve(processedUri)
-      },
-    )
+    console.log('FFmpegKit removed, skipping video compression. Using original file.')
+    resolve(sourceUri)
   })
 }
 
@@ -165,8 +153,7 @@ export const blendVideoWithAudio = async (
   }
 
   console.log('blendVideoWithAudio command ' + command)
-  FFmpegKit.execute(command).then(async session => {
-    const output = await session.getOutput()
-    callback(processedUri)
-  })
+  console.log('blendVideoWithAudio command ' + command)
+  console.log('FFmpegKit removed, returning unblended original video.')
+  callback(videoStream)
 }

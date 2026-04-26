@@ -57,6 +57,8 @@ allprojects {
         google()
         mavenCentral()
         maven { url 'https://www.jitpack.io' }
+        maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
+        maven { url 'https://s01.oss.sonatype.org/content/repositories/releases/' }
         // jcenter() {
         //     content {
         //        includeModule("com.danikula", "videocache")

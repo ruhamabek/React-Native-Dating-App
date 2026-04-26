@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
-import { useTranslations } from '../../core/dopebase'
+import { useTheme, useTranslations } from '../../core/dopebase'
 import CardDetailsView from '../../components/swipe/CardDetailsView/CardDetailsView'
 import ConversationsHomeComponent from './ConversationsHomeComponent'
 import { SwipeTracker } from '../../api/'
 
 const ConversationsScreen = props => {
   const currentUser = useSelector(state => state.auth.user)
+  const { theme, appearance } = useTheme()
+  const colors = theme.colors[appearance]
 
   const [matches, setMatches] = useState([])
 
@@ -86,37 +88,6 @@ const ConversationsScreen = props => {
       emptyStateConfig={emptyStateConfig}
     />
   )
-
-  {
-    /* <View style={styles.container}>
-                <Modal visible={isUserProfileDetailVisible} animationType={"slide"}>
-                    <View style={styles.cardDetailContainer}>
-                        <View style={styles.cardDetailL}>{renderCardDetailModal()}</View>
-                    </View>
-                </Modal>
-            </View> */
-  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#efeff4',
-  },
-  cardDetailContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  cardDetailL: {
-    // position: 'absolute',
-    // bottom: 0,
-    // width: Statics.DEVICE_WIDTH,
-    // height: Statics.DEVICE_HEIGHT * 0.95,
-    // paddingBottom: size(100),
-    backgroundColor: 'white',
-  },
-})
 
 export default ConversationsScreen
