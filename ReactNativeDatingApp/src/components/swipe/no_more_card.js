@@ -41,7 +41,7 @@ const NoMoreCard = ({ user }) => {
         </View>
       )}
 
-      <Text style={[styles.hintText, { color: colors.crimson }]}>
+      <Text style={[styles.hintText, { color: colors.primaryForeground }]}>
         {localized('Check back later')}
       </Text>
     </View>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     height: size(100),
     borderRadius: size(50),
     borderWidth: 3,
-    borderColor: '#E31B23',
+    borderColor: '#89CFF0',
     overflow: 'hidden',
     marginBottom: size(20),
     justifyContent: 'center',

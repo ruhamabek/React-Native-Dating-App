@@ -1,10 +1,10 @@
-import React, { memo, useCallback, useMemo } from 'react'
+import   { memo, useCallback, useMemo } from 'react'
 import { View, Text, SafeAreaView, TextInput } from 'react-native'
 import { Image } from 'expo-image'
 import { useSelector } from 'react-redux'
 import { useTheme, useTranslations, StoriesTray } from '../../core/dopebase'
 import { IMConversationListView } from '../../core/chat'
-import AtelierLogo from '../../components/AtelierLogo/AtelierLogo'
+import GraceLogo from '../../components/GraceLogo/GraceLogo'
 import dynamicStyles from './styles'
 
 const ConversationsHomeComponent = memo(props => {
@@ -54,7 +54,7 @@ const ConversationsHomeComponent = memo(props => {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         {/* Screen title */}
-        <AtelierLogo />
+        <GraceLogo />
 
         {/* Search Bar */}
         <View style={styles.searchContainer}>
@@ -66,7 +66,7 @@ const ConversationsHomeComponent = memo(props => {
           <TextInput
             style={styles.searchInput}
             placeholder={localized('Search conversations')}
-            placeholderTextColor="#666666"
+            placeholderTextColor={colors.secondaryText}
             clearButtonMode="while-editing"
           />
         </View>

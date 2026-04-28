@@ -41,6 +41,7 @@ const dynamicStyles = (theme, appearance) => {
     heroName: {
       fontSize: 28,
       fontWeight: '700',
+      fontFamily: theme.fontFamilies.headline,
       color: '#FFFFFF',
       letterSpacing: -0.3,
     },
@@ -56,6 +57,7 @@ const dynamicStyles = (theme, appearance) => {
     },
     locationText: {
       fontSize: 14,
+      fontFamily: theme.fontFamilies.body,
       color: 'rgba(255,255,255,0.8)',
       marginLeft: 4,
     },
@@ -68,12 +70,14 @@ const dynamicStyles = (theme, appearance) => {
     sectionTitle: {
       fontSize: 18,
       fontWeight: '700',
+      fontFamily: theme.fontFamilies.headline,
       color: colors.primaryText,
       marginBottom: 12,
       letterSpacing: -0.2,
     },
     bioText: {
       fontSize: 16,
+      fontFamily: theme.fontFamilies.body,
       color: colors.secondaryText,
       lineHeight: 24,
     },
@@ -92,17 +96,17 @@ const dynamicStyles = (theme, appearance) => {
       backgroundColor: colors.grey3,
     },
     addPhotoButton: {
-      backgroundColor: colors.crimson + '15',
+      backgroundColor: colors.primaryForeground + '15',
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 2,
-      borderColor: colors.crimson + '30',
+      borderColor: colors.primaryForeground + '30',
       borderStyle: 'dashed',
     },
     addPhotoIcon: {
       width: 32,
       height: 32,
-      tintColor: colors.crimson,
+      tintColor: colors.primaryForeground,
     },
 
     // ─── Menu Items ───
@@ -133,6 +137,7 @@ const dynamicStyles = (theme, appearance) => {
     menuLabel: {
       flex: 1,
       fontSize: 16,
+      fontFamily: theme.fontFamilies.body,
       color: colors.primaryText,
       fontWeight: '500',
     },
@@ -149,16 +154,23 @@ const dynamicStyles = (theme, appearance) => {
       marginBottom: 40,
       padding: 16,
       borderRadius: 16,
-      backgroundColor: colors.crimson + '10',
-      borderWidth: 1,
-      borderColor: colors.crimson + '25',
+      backgroundColor: colors.red,
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor: colors.red,
+      shadowOffset: {
+        width: 0,
+        height: 4,
+      },
+      shadowOpacity: 0.3,
+      shadowRadius: 8,
+      elevation: 4,
     },
     logoutText: {
       fontSize: 16,
       fontWeight: '600',
-      color: colors.crimson,
+      fontFamily: theme.fontFamilies.body,
+      color: '#FFFFFF',
     },
 
     // ─── Legacy (kept for compatibility) ───

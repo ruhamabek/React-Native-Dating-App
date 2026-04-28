@@ -1,5 +1,4 @@
-import React from 'react'
-import { Text, Linking, View } from 'react-native'
+ import { Text, Linking, View } from 'react-native'
 import { useTheme, useTranslations } from '../../dopebase'
 
 const TermsOfUseView = props => {
@@ -15,7 +14,7 @@ const TermsOfUseView = props => {
       </Text>
       <Text>
         <Text
-          style={{ color: 'blue', fontSize: 12 }}
+          style={{ color: theme.colors[appearance].primaryForeground, fontSize: 12 }}
           onPress={() => Linking.openURL(tosLink)}>
           {localized('Terms of Use')}
         </Text>
@@ -23,7 +22,7 @@ const TermsOfUseView = props => {
           <Text style={{ fontSize: 12 }}>
             {localized(' and ')}
             <Text
-              style={{ color: 'blue', fontSize: 12 }}
+              style={{ color: theme.colors[appearance].primaryForeground, fontSize: 12 }}
               onPress={() => Linking.openURL(privacyPolicyLink)}>
               {localized('Privacy Policy')}
             </Text>

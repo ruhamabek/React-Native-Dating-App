@@ -52,13 +52,13 @@ const dynamicStyles = (theme, appearance) => {
       marginBottom: 8,
     },
     timestampUnread: {
-      color: colorSet.crimson || '#E31B23',
+      color: colorSet.primaryForeground,
     },
     unreadBadge: {
       width: 10,
       height: 10,
       borderRadius: 5,
-      backgroundColor: colorSet.crimson || '#E31B23',
+      backgroundColor: colorSet.primaryForeground,
     },
   })
 }

@@ -22,7 +22,7 @@ const dynamicStyles = (theme, appearance) => {
     headerTitle: {
       fontSize: 22,
       fontWeight: '800',
-      color: colors.crimson,
+      color: colors.primaryForeground,
       letterSpacing: 1,
       textTransform: 'uppercase',
     },
@@ -30,7 +30,7 @@ const dynamicStyles = (theme, appearance) => {
     searchContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: '#1C1C1E',
+      backgroundColor: 'rgba(141, 156, 175, 0.1)',
       borderRadius: 16,
       marginHorizontal: 20,
       marginBottom: 32,
@@ -44,7 +44,7 @@ const dynamicStyles = (theme, appearance) => {
     },
     searchInput: {
       flex: 1,
-      color: '#FFFFFF',
+      color: colors.primaryText,
       fontSize: 15,
       fontWeight: '500',
     },
@@ -70,14 +70,14 @@ const dynamicStyles = (theme, appearance) => {
     viewAllButton: {
       fontSize: 10,
       fontWeight: '800',
-      color: colors.crimson,
+      color: colors.primaryForeground,
       letterSpacing: 1.5,
       textTransform: 'uppercase',
     },
     // Match avatar styling
     userImageContainer: {
       borderWidth: 2,
-      borderColor: colors.crimson,
+      borderColor: colors.primaryForeground,
       borderRadius: 9999,
     },
     // Messages section

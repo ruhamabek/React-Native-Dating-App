@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 3,
     borderRadius: 2,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#89CFF0',
   },
   storyIndicatorInactive: {
     flex: 1,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
-    backgroundColor: 'rgba(0,0,0,0.55)',
+    backgroundColor: 'rgba(28, 45, 59, 0.45)', // Blue-tinted soft scrim
   },
   userDetailContainer: {
     flex: 4,
@@ -147,10 +147,11 @@ const styles = StyleSheet.create({
     height: undoIconContainerSize,
     width: undoIconContainerSize,
     borderRadius: undoIconContainerSize / 2,
-    backgroundColor: '#E31B23',
+    backgroundColor: '#89CFF0',
     zIndex: 2,
   },
   name_style: {
+    fontFamily: 'NotoSerif-Bold',
     fontSize: size(28),
     fontWeight: '700',
     color: 'white',
@@ -159,9 +160,10 @@ const styles = StyleSheet.create({
     letterSpacing: -0.3,
   },
   bioQuote: {
+    fontFamily: 'PlusJakartaSans-Regular',
     fontSize: size(14),
     fontWeight: '400',
-    color: 'rgba(255,255,255,0.85)',
+    color: 'rgba(255,255,255,0.9)',
     fontStyle: 'italic',
     marginTop: size(4),
     backgroundColor: 'transparent',

@@ -234,14 +234,14 @@ const Deck = props => {
           overlayLabels={{
             left: {
               title: 'NOPE',
-              element: renderOverlayLabel('NOPE', '#E31B23'),
+              element: renderOverlayLabel('NOPE', colors.error),
               style: {
                 wrapper: styles.overlayWrapper,
               },
             },
             right: {
               title: 'LIKE',
-              element: renderOverlayLabel('LIKE', '#44D48C'),
+              element: renderOverlayLabel('LIKE', colors.primaryForeground),
               style: {
                 wrapper: {
                   ...styles.overlayWrapper,

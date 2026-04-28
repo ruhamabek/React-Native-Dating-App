@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import   { useState, useEffect, useRef } from 'react'
 import { View, Alert, StatusBar, SafeAreaView, AppState } from 'react-native'
 import { useSelector } from 'react-redux'
 import { useTheme, useTranslations } from '../../core/dopebase'
@@ -8,7 +8,7 @@ import ActivityModal from '../../components/ActivityModal'
 import Deck from '../../components/swipe/deck'
 import NoMoreCard from '../../components/swipe/no_more_card'
 import NewMatch from '../../components/swipe/newMatch'
-import AtelierLogo from '../../components/AtelierLogo/AtelierLogo'
+import GraceLogo from '../../components/GraceLogo/GraceLogo'
 import { SwipeTracker } from '../../api'
 import dynamicStyles from './styles'
 import { useIap } from '../../core/inAppPurchase/context'
@@ -371,7 +371,7 @@ const HomeScreen = props => {
     <View style={styles.container}>
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.container}>
-          <AtelierLogo />
+          <GraceLogo />
           {(recommendations.length > 0 || hasConsumedRecommendationsStream) && (
             <Deck
               data={recommendations}
@@ -396,10 +396,13 @@ const HomeScreen = props => {
             }
             title={localized('Please wait')}
             size={'large'}
-            activityColor={'white'}
-            titleColor={'white'}
+            activityColor={theme.colors[appearance].primaryForeground}
+            titleColor={theme.colors[appearance].primaryText}
             activityWrapperStyle={{
-              backgroundColor: '#404040',
+              backgroundColor: theme.colors[appearance].primaryBackground,
+              borderRadius: theme.borderRadii.card,
+              borderWidth: 1,
+              borderColor: theme.colors[appearance].hairline,
             }}
           />
         </View>

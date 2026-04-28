@@ -26,11 +26,10 @@ const dynamicStyles = (theme, appearance) => {
       width: 52,
       height: 52,
       borderRadius: 26,
-      backgroundColor: '#E31B23',
+      backgroundColor: '#89CFF0',
       justifyContent: 'center',
       alignItems: 'center',
-      // Subtle shadow
-      shadowColor: '#E31B23',
+       shadowColor: '#89CFF0',
       shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.3,
       shadowRadius: 8,

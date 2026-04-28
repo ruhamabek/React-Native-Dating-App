@@ -17,16 +17,17 @@ const styles = (theme, appearance) => {
       color: theme.colors[appearance].foregroundContrast,
       fontSize: theme.fontSizes.m,
       fontWeight: theme.fontWeights.m,
+      fontFamily: theme.fontFamilies.body,
     },
     DNButtonShadow: {
-      shadowColor: '#000',
+      shadowColor: '#89CFF0',
       shadowOffset: {
         width: 0,
-        height: 2,
+        height: 4,
       },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
+      shadowOpacity: 0.1,
+      shadowRadius: 12,
+      elevation: 6,
     },
   })
 }

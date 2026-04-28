@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Image,
   Keyboard,
-  TextInput,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native'
@@ -26,6 +24,9 @@ import {
   Alert,
   ProfilePictureSelector,
   CountriesModalPicker,
+  Text,
+  TextInput,
+  Button,
 } from '../../../dopebase'
 import { setUserData } from '../../redux/auth'
 import { useDispatch } from 'react-redux'
@@ -352,9 +353,11 @@ const SmsAuthenticationScreen = () => {
             onCancel={onPressCancelContryModalPicker}
           />
         )}
-        <TouchableOpacity style={styles.sendContainer} onPress={onPressSend}>
-          <Text style={styles.sendText}>{localized('Send code')}</Text>
-        </TouchableOpacity>
+        <Button
+          style={styles.sendContainer}
+          text={localized('Send code')}
+          onPress={onPressSend}
+        />
       </>
     )
   }
@@ -399,10 +402,8 @@ const SmsAuthenticationScreen = () => {
         key={index?.toString()}
         style={styles.InputContainer}
         placeholder={field.placeholder}
-        placeholderTextColor="#aaaaaa"
-        onChangeText={text => onChangeInputFields(text, field.key)}
+        onChange={text => onChangeInputFields(text, field.key)}
         value={inputFields[field.key]}
-        underlineColorAndroid="transparent"
       />
     )
   }

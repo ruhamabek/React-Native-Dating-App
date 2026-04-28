@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Image, Keyboard, Platform, Text, View } from 'react-native'
+import  { useState, useEffect } from 'react'
+import {   Keyboard, Platform, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import messaging from '@react-native-firebase/messaging'
@@ -9,7 +9,9 @@ import {
   ActivityIndicator,
   DismissButton,
   Button,
+  Text,
 } from '../../../dopebase'
+import GraceLogo from '../../../../components/GraceLogo/GraceLogo'
 import dynamicStyles from './styles'
 import { setUserData } from '../../redux/auth'
 import { updateUser } from '../../../users'
@@ -124,12 +126,7 @@ const WelcomeScreen = props => {
         />
       )}
       <View style={styles.logo}>
-        <Image
-          style={styles.logoImage}
-          source={
-            props.delayedMode ? theme.icons.delayedLogo : theme.icons.logo
-          }
-        />
+        <GraceLogo />
       </View>
       <Text style={styles.title}>
         {title ? title : config.onboardingConfig.welcomeTitle}

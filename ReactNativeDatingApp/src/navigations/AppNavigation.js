@@ -138,7 +138,7 @@ const HomeStack = () => {
   )
 }
 
- const CrimsonTabBar = ({ state, descriptors, navigation }) => {
+ const GraceTabBar = ({ state,  navigation }) => {
   const { theme, appearance } = useTheme()
   const colors = theme.colors[appearance]
 
@@ -218,12 +218,11 @@ const tabBarStyles = StyleSheet.create({
     borderRadius: 32,
     borderWidth: 1,
     paddingHorizontal: 8,
-    // Glassmorphism shadow
-    shadowColor: '#000',
+     shadowColor: '#89CFF0',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.08,
-    shadowRadius: 24,
-    elevation: 12,
+    shadowOpacity: 0.05,
+    shadowRadius: 32,
+    elevation: 8,
   },
   tabItem: {
     flex: 1,
@@ -241,7 +240,7 @@ const doNotShowHeaderOption = {
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      tabBar={(props) => <CrimsonTabBar {...props} />}
+      tabBar={(props) => <GraceTabBar {...props} />}
       screenOptions={{
         headerShown: false,
       }}

@@ -1,4 +1,4 @@
-import { I18nManager, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 const styles = (theme, appearance) => {
   return StyleSheet.create({
@@ -15,9 +15,10 @@ const styles = (theme, appearance) => {
       fontSize: 16,
       backgroundColor: theme.colors[appearance].grey3,
       width: '100%',
-      height: '100%',
-      borderRadius: 10,
-      paddingHorizontal: 10,
+      height: 40,
+      borderRadius: 12,
+      paddingHorizontal: 16,
+      fontFamily: theme.fontFamilies.body,
     },
     cancelButtonContainer: {
       flex: 1,

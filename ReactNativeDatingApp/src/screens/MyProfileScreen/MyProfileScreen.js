@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import  { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   View,
@@ -14,14 +14,13 @@ import { Image } from 'expo-image'
   useActionSheet,
   useTheme,
   useTranslations,
-  ProfilePictureSelector,
-} from '../../core/dopebase'
+ } from '../../core/dopebase'
 import { updateUser } from '../../core/users'
 import { storageAPI } from '../../core/media'
 import ActivityModal from '../../components/ActivityModal'
 import { logout } from '../../core/onboarding/redux/auth'
 import { setUserData } from '../../core/onboarding/redux/auth'
-import AtelierLogo from '../../components/AtelierLogo/AtelierLogo'
+import GraceLogo from '../../components/GraceLogo/GraceLogo'
 import dynamicStyles from './styles'
 import { useIap } from '../../core/inAppPurchase/context'
 import { useConfig } from '../../config'
@@ -273,7 +272,7 @@ const MyProfileScreen = props => {
     {
       label: localized('Account Details'),
       icon: theme.icons.account,
-      iconTint: colors.crimson,
+      iconTint: colors.primaryForeground,
       onPress: detail,
     },
     {
@@ -306,7 +305,7 @@ const MyProfileScreen = props => {
     <View style={styles.MainContainer}>
       <SafeAreaView style={styles.safeAreaContainer}>
         <View style={styles.MainContainer}>
-          <AtelierLogo />
+          <GraceLogo />
           <ScrollView
             style={styles.body}
             showsVerticalScrollIndicator={false}
@@ -449,10 +448,13 @@ const MyProfileScreen = props => {
             loading={loading}
             title={localized('Please wait')}
             size={'large'}
-            activityColor={'white'}
-            titleColor={'white'}
+            activityColor={theme.colors[appearance].primaryForeground}
+            titleColor={theme.colors[appearance].primaryText}
             activityWrapperStyle={{
-              backgroundColor: '#404040',
+              backgroundColor: theme.colors[appearance].primaryBackground,
+              borderRadius: theme.borderRadii.card,
+              borderWidth: 1,
+              borderColor: theme.colors[appearance].hairline,
             }}
           />
         </View>

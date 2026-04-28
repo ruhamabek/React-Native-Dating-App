@@ -2,14 +2,14 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { useTheme } from '../../core/dopebase'
 
-const AtelierLogo = ({ containerStyle, textStyle }) => {
+const GraceLogo = ({ containerStyle, textStyle }) => {
   const { theme, appearance } = useTheme()
   const colors = theme.colors[appearance]
 
   return (
     <View style={[styles.headerContainer, containerStyle]}>
-      <Text style={[styles.headerTitle, { color: colors.crimson }, textStyle]}>
-        ATELIER
+      <Text style={[styles.headerTitle, { color: colors.primaryForeground, fontFamily: theme.fontFamilies.headline }, textStyle]}>
+        GRACE
       </Text>
     </View>
   )
@@ -19,15 +19,15 @@ const styles = StyleSheet.create({
   headerContainer: {
     paddingHorizontal: 20,
     paddingTop: 16,
-    paddingBottom: 16,  
+    paddingBottom: 4,  
     alignItems: 'center',
   },
   headerTitle: {
-    fontSize: 22,
-    fontWeight: '800',
-    letterSpacing: 1,
+    fontSize: 26,
+    fontWeight: '700',
+    letterSpacing: 2,
     textTransform: 'uppercase',
   },
 })
 
-export default AtelierLogo
+export default GraceLogo

@@ -3,18 +3,24 @@ import { StyleSheet } from 'react-native'
 const dynamicStyles = (theme, colorScheme) => {
   return StyleSheet.create({
     title: {
-      fontSize: 25,
+      fontSize: 32,
       fontWeight: 'bold',
-      textAlign: 'center',
-      paddingBottom: 25,
+      fontFamily: theme.fontFamilies.headline,
       color: 'white',
+      textAlign: 'center',
+      marginLeft: 40,
+      marginRight: 40,
+      marginTop: 40,
     },
     text: {
-      fontSize: 18,
-      textAlign: 'center',
+      fontSize: 16,
+      fontFamily: theme.fontFamilies.body,
       color: 'white',
-      paddingLeft: 10,
-      paddingRight: 10,
+      textAlign: 'center',
+      marginTop: 16,
+      marginLeft: 40,
+      marginRight: 40,
+      lineHeight: 24,
     },
     image: {
       width: 100,

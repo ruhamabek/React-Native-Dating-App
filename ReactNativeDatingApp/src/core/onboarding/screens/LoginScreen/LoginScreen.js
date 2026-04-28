@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import {
   Image,
   Keyboard,
-  Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
@@ -18,6 +16,9 @@ import {
   useTranslations,
   ActivityIndicator,
   Alert,
+  Text,
+  TextInput,
+  Button,
 } from '../../../dopebase'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import dynamicStyles from './styles'
@@ -216,21 +217,15 @@ const LoginScreen = () => {
           style={styles.InputContainer}
           placeholder={localized('E-mail')}
           keyboardType="email-address"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={text => setEmail(text)}
+          onChange={text => setEmail(text)}
           value={email}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
         />
         <TextInput
           style={styles.InputContainer}
-          placeholderTextColor="#aaaaaa"
-          secureTextEntry
+          password
           placeholder={localized('Password')}
-          onChangeText={text => setPassword(text)}
+          onChange={text => setPassword(text)}
           value={password}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
         />
         {config.forgotPasswordEnabled && (
           <View style={styles.forgotPasswordContainer}>
@@ -241,11 +236,11 @@ const LoginScreen = () => {
             </TouchableOpacity>
           </View>
         )}
-        <TouchableOpacity
+        <Button
           style={styles.loginContainer}
-          onPress={() => onPressLogin()}>
-          <Text style={styles.loginText}>{localized('Log In')}</Text>
-        </TouchableOpacity>
+          text={localized('Log In')}
+          onPress={() => onPressLogin()}
+        />
         {config.isFacebookAuthEnabled && (
           <>
             <Text style={styles.orTextStyle}> {localized('OR')}</Text>

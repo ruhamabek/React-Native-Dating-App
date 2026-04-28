@@ -53,7 +53,7 @@ const BottomTabBar = props => {
         >
           <Image
             source={theme.icons.crossFilled}
-            style={[styles.large_icon, { tintColor: '#E31B23' }]}
+            style={[styles.large_icon, { tintColor: colors.outline }]}
           />
         </Animated.View>
       </TouchableWithoutFeedback>
@@ -71,7 +71,7 @@ const BottomTabBar = props => {
         >
           <Image
             source={theme.icons.starFilled}
-            style={[styles.small_icon, { tintColor: '#3C94DC' }]}
+            style={[styles.small_icon, { tintColor: colors.secondary }]}
           />
         </Animated.View>
       </TouchableWithoutFeedback>
@@ -89,7 +89,7 @@ const BottomTabBar = props => {
         >
           <Image
             source={theme.icons.Like}
-            style={[styles.large_icon, { tintColor: '#44D48C' }]}
+            style={[styles.large_icon, { tintColor: colors.primaryForeground }]}
           />
         </Animated.View>
       </TouchableWithoutFeedback>
@@ -107,17 +107,17 @@ const styles = StyleSheet.create({
     marginBottom: size(35),
   },
   button_container: {
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.06)',
+    borderColor: 'rgba(141, 156, 175, 0.1)',
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-     shadowColor: '#000',
+    shadowColor: '#89CFF0',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.04,
-    shadowRadius: 30,
-    elevation: 4,
+    shadowOpacity: 0.08,
+    shadowRadius: 24,
+    elevation: 8,
   },
   largeButton: {
     width: size(64),

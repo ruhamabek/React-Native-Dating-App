@@ -1,10 +1,8 @@
-import React, { useState, 
+import  { useState, 
 } from 'react'
 import {
   Image,
   Keyboard,
-  Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
@@ -17,6 +15,8 @@ import {
   ActivityIndicator,
   Alert,
   ProfilePictureSelector,
+  Text,
+  TextInput,
 } from '../../../dopebase'
 import dynamicStyles from './styles'
 import { setUserData } from '../../redux/auth'
@@ -172,13 +172,10 @@ const SignupScreen = () => {
         key={index?.toString()}
         style={styles.InputContainer}
         placeholder={field.placeholder}
-        placeholderTextColor="#aaaaaa"
         secureTextEntry={field.secureTextEntry}
-        onChangeText={text => onChangeInputFields(text, field.key)}
+        onChange={text => onChangeInputFields(text, field.key)}
         value={inputFields[field.key]}
         keyboardType={field.type}
-        underlineColorAndroid="transparent"
-        autoCapitalize={field.autoCapitalize}
       />
     )
   }
