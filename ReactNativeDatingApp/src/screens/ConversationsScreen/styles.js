@@ -22,7 +22,7 @@ const dynamicStyles = (theme, appearance) => {
     headerTitle: {
       fontSize: 22,
       fontWeight: '800',
-      color: colors.crimson,
+      color: colors.primaryForeground,
       letterSpacing: 1,
       textTransform: 'uppercase',
     },
@@ -30,8 +30,10 @@ const dynamicStyles = (theme, appearance) => {
     searchContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: '#1C1C1E',
-      borderRadius: 16,
+      backgroundColor: appearance === 'monochrome' ? colors.primaryBackground : '#1C1C1E',
+      borderRadius: theme.borderRadii.chip,
+      borderWidth: appearance === 'monochrome' ? 1 : 0,
+      borderColor: colors.grey3,
       marginHorizontal: 20,
       marginBottom: 32,
       paddingHorizontal: 16,
@@ -77,8 +79,8 @@ const dynamicStyles = (theme, appearance) => {
     // Match avatar styling
     userImageContainer: {
       borderWidth: 2,
-      borderColor: colors.crimson,
-      borderRadius: 9999,
+      borderColor: colors.primaryForeground,
+      borderRadius: theme.borderRadii.chip,
     },
     // Messages section
     messagesHeaderContainer: {

@@ -396,10 +396,12 @@ const HomeScreen = props => {
             }
             title={localized('Please wait')}
             size={'large'}
-            activityColor={'white'}
-            titleColor={'white'}
+            activityColor={theme.colors[appearance].primaryForeground}
+            titleColor={theme.colors[appearance].primaryForeground}
             activityWrapperStyle={{
-              backgroundColor: '#404040',
+              backgroundColor: theme.colors[appearance].primaryBackground,
+              borderWidth: appearance === 'monochrome' ? 1 : 0,
+              borderColor: theme.colors[appearance].primaryForeground,
             }}
           />
         </View>

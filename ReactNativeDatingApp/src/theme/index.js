@@ -76,6 +76,13 @@ const crimsonPalette = {
   blue: '#3C94DC',
 }
 
+const monochromePalette = {
+  black: '#000000',
+  white: '#FFFFFF',
+  grey: '#1a1a1a',
+  outline: '#FFFFFF',
+}
+
 const lightColors = {
   primaryBackground: '#FFFFFF',
   secondaryBackground: '#F9F9F9',
@@ -137,11 +144,52 @@ const darkColors = {
   overlayBackground: 'rgba(0,0,0,0.85)',
 }
 
+const monochromeColors = {
+  primaryBackground: '#000000',
+  secondaryBackground: '#000000',
+  primaryForeground: '#FFFFFF',
+  secondaryForeground: '#1A1A1A',
+  foregroundContrast: '#000000',
+  primaryText: '#FFFFFF',
+  secondaryText: '#FFFFFF',
+  hairline: '#FFFFFF',
+  grey0: '#000000',
+  grey3: '#FFFFFF', // High contrast border
+  grey6: '#FFFFFF',
+  grey9: '#FFFFFF',
+  red: '#FFFFFF',
+  surfaceGlass: 'rgba(0,0,0,0.9)',
+  gradientScrimStart: 'transparent',
+  gradientScrimEnd: 'rgba(0,0,0,1)',
+  cardBackground: '#000000',
+  tabBarBackground: '#000000',
+  tabBarBorder: '#FFFFFF',
+  activeTabTint: '#FFFFFF',
+  inactiveTabTint: '#666666',
+  chipBackground: '#000000',
+  chipText: '#FFFFFF',
+  overlayBackground: 'rgba(0,0,0,0.95)',
+}
+
+const monochromeBorderRadii = {
+  chip: 0,
+  button: 0,
+  card: 0,
+  full: 0,
+}
+
+const monochromeFontFamilies = {
+  headline: 'PlusJakartaSans',
+  body: 'PlusJakartaSans',
+  label: 'PlusJakartaSans',
+}
+
 const InstamobileTheme = {
   colors: {
     light: lightColors,
     'no-preference': lightColors,
     dark: darkColors,
+    monochrome: monochromeColors,
   },
   spaces: {
     horizontal: {
@@ -173,21 +221,35 @@ const InstamobileTheme = {
     l: '700',
     xl: '800',
   },
-   borderRadii: {
-    chip: 8,
-    button: 16,
-    card: 24,
-    full: 9999,
+  borderRadii: {
+    light: {
+      chip: 8,
+      button: 16,
+      card: 24,
+      full: 9999,
+    },
+    dark: {
+      chip: 8,
+      button: 16,
+      card: 24,
+      full: 9999,
+    },
+    monochrome: monochromeBorderRadii,
   },
-   fontFamilies: {
-    headline: 'PlusJakartaSans',  // Plus Jakarta Sans
-    body: 'BeVietnamPro',         // Be Vietnam Pro
-    label: 'BeVietnamPro',
+  fontFamilies: {
+    light: {
+      headline: 'PlusJakartaSans',
+      body: 'BeVietnamPro',
+      label: 'BeVietnamPro',
+    },
+    dark: {
+      headline: 'PlusJakartaSans',
+      body: 'BeVietnamPro',
+      label: 'BeVietnamPro',
+    },
+    monochrome: monochromeFontFamilies,
   },
   icons: icons,
-  button: {
-    borderRadius: 16, // Updated from 8 to match Crimson design
-  },
 }
 
 export default InstamobileTheme

@@ -8,7 +8,7 @@ const AtelierLogo = ({ containerStyle, textStyle }) => {
 
   return (
     <View style={[styles.headerContainer, containerStyle]}>
-      <Text style={[styles.headerTitle, { color: colors.crimson }, textStyle]}>
+      <Text style={[styles.headerTitle, { color: colors.primaryText, fontFamily: theme.fontFamilies.headline }, textStyle]}>
         ATELIER
       </Text>
     </View>

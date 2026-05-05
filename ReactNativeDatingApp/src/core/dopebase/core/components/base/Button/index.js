@@ -21,14 +21,14 @@ const Button = props => {
 
   const containerStyles = [
     styles.DNButtonContainer,
-    { borderRadius: radius ?? theme.button.borderRadius },
+    { borderRadius: radius ?? theme.borderRadii.button },
     secondary && {
       backgroundColor: theme.colors[appearance].primaryBackground,
       borderColor: theme.colors[appearance].primaryForeground,
       borderWidth: 1,
     },
     ...spacingStyles,
-    shadow && styles.DNButtonShadow,
+    shadow && appearance !== 'monochrome' && styles.DNButtonShadow,
     containerStyle,
   ]
 

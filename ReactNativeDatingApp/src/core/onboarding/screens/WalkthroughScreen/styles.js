@@ -7,12 +7,13 @@ const dynamicStyles = (theme, colorScheme) => {
       fontWeight: 'bold',
       textAlign: 'center',
       paddingBottom: 25,
-      color: 'white',
+      color: theme.colors[colorScheme].primaryBackground,
+      fontFamily: theme.fontFamilies.headline,
     },
     text: {
       fontSize: 18,
       textAlign: 'center',
-      color: 'white',
+      color: theme.colors[colorScheme].primaryBackground,
       paddingLeft: 10,
       paddingRight: 10,
     },
@@ -20,7 +21,7 @@ const dynamicStyles = (theme, colorScheme) => {
       width: 100,
       height: 100,
       marginBottom: 60,
-      tintColor: 'white',
+      tintColor: theme.colors[colorScheme].primaryBackground,
     },
     container: {
       justifyContent: 'center',
@@ -31,7 +32,7 @@ const dynamicStyles = (theme, colorScheme) => {
     },
     button: {
       fontSize: 18,
-      color: 'white',
+      color: theme.colors[colorScheme].primaryBackground,
       marginTop: 10,
     },
   })

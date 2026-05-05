@@ -87,22 +87,23 @@ const dynamicStyles = (theme, appearance) => {
     myphotosItemView: {
       width: Platform.OS === 'web' ? 160 : Math.floor((width - 56) / 3),
       height: Platform.OS === 'web' ? 160 : Math.floor((width - 56) / 3),
-      borderRadius: 16,
+      borderRadius: theme.borderRadii.card,
       overflow: 'hidden',
       backgroundColor: colors.grey3,
     },
     addPhotoButton: {
-      backgroundColor: colors.crimson + '15',
+      backgroundColor: appearance === 'monochrome' ? colors.primaryBackground : colors.crimson + '15',
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 2,
-      borderColor: colors.crimson + '30',
+      borderColor: appearance === 'monochrome' ? colors.primaryForeground : colors.crimson + '30',
       borderStyle: 'dashed',
+      borderRadius: theme.borderRadii.card,
     },
     addPhotoIcon: {
       width: 32,
       height: 32,
-      tintColor: colors.crimson,
+      tintColor: appearance === 'monochrome' ? colors.primaryForeground : colors.crimson,
     },
 
     // ─── Menu Items ───
@@ -120,10 +121,12 @@ const dynamicStyles = (theme, appearance) => {
     menuIconContainer: {
       width: 40,
       height: 40,
-      borderRadius: 12,
+      borderRadius: theme.borderRadii.chip,
       justifyContent: 'center',
       alignItems: 'center',
       marginRight: 14,
+      borderWidth: appearance === 'monochrome' ? 1 : 0,
+      borderColor: colors.primaryForeground,
     },
     menuIcon: {
       width: 20,
@@ -148,17 +151,17 @@ const dynamicStyles = (theme, appearance) => {
       marginHorizontal: 20,
       marginBottom: 40,
       padding: 16,
-      borderRadius: 16,
-      backgroundColor: colors.crimson + '10',
+      borderRadius: theme.borderRadii.button,
+      backgroundColor: appearance === 'monochrome' ? colors.primaryForeground : '#ff4444', 
       borderWidth: 1,
-      borderColor: colors.crimson + '25',
+      borderColor: appearance === 'monochrome' ? colors.primaryForeground : '#ff4444',
       justifyContent: 'center',
       alignItems: 'center',
     },
     logoutText: {
       fontSize: 16,
       fontWeight: '600',
-      color: colors.crimson,
+      color: appearance === 'monochrome' ? colors.primaryBackground : '#FFFFFF',
     },
 
     // ─── Legacy (kept for compatibility) ───

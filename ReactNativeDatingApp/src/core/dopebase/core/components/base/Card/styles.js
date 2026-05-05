@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 const styles = (theme, appearance) => {
   return StyleSheet.create({
     tnCardContainer: {
-      borderRadius: 8,
+      borderRadius: theme.borderRadii.card,
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: theme.colors[appearance].primaryBackground,

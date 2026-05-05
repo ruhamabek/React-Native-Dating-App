@@ -24,10 +24,14 @@ const Text = props => {
 
   const textStyles = [
     secondary ? styles.tnSecondaryText : styles.tnPrimaryText,
-    h1 && { fontSize: theme.fontSizes.xxl, fontWeight: theme.fontWeights.l },
+    h1 && { 
+      fontSize: appearance === 'monochrome' ? theme.fontSizes.display : theme.fontSizes.xxl, 
+      fontWeight: theme.fontWeights.l,
+      letterSpacing: appearance === 'monochrome' ? -1 : 0,
+    },
     h2 && { fontSize: theme.fontSizes.xl, fontWeight: theme.fontWeights.l },
     h3 && { fontSize: theme.fontSizes.l, fontWeight: theme.fontWeights.l },
-    uppercase && { textTransform: 'uppercase' },
+    uppercase && { textTransform: 'uppercase', letterSpacing: 1 },
     lowercase && { textTransform: 'lowercase' },
     ...spacingStyles,
     style,

@@ -124,12 +124,7 @@ const WelcomeScreen = props => {
         />
       )}
       <View style={styles.logo}>
-        <Image
-          style={styles.logoImage}
-          source={
-            props.delayedMode ? theme.icons.delayedLogo : theme.icons.logo
-          }
-        />
+        <AtelierLogo textStyle={{ fontSize: 40 }} />
       </View>
       <Text style={styles.title}>
         {title ? title : config.onboardingConfig.welcomeTitle}

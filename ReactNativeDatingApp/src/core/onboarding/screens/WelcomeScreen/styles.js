@@ -30,6 +30,7 @@ const dynamicStyles = (theme, colorScheme) => {
       marginTop: 20,
       marginBottom: 20,
       textAlign: 'center',
+      fontFamily: theme.fontFamilies.headline,
     },
     caption: {
       fontSize: 16,
@@ -41,7 +42,7 @@ const dynamicStyles = (theme, colorScheme) => {
     loginContainer: {
       width: '70%',
       backgroundColor: colorSet.primaryForeground,
-      borderRadius: 25,
+      borderRadius: theme.borderRadii.button,
       padding: 10,
       paddingTop: 14,
       paddingBottom: 14,
@@ -60,7 +61,7 @@ const dynamicStyles = (theme, colorScheme) => {
       alignItems: 'center',
       width: '70%',
       backgroundColor: colorSet.primaryBackground,
-      borderRadius: 25,
+      borderRadius: theme.borderRadii.button,
       borderWidth: Platform.OS === 'ios' ? 0.5 : 1.0,
       borderColor: colorSet.primaryForeground,
       padding: 10,

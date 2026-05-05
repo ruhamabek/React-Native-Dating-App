@@ -29,7 +29,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <TranslationProvider translations={translations}>
-        <DopebaseProvider theme={theme}>
+        <DopebaseProvider theme={theme} appearance="monochrome">
           <ConfigProvider>
             <AuthProvider authManager={authManager}>
               <ProfileAuthProvider authManager={authManager}>

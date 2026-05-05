@@ -19,8 +19,8 @@ const Card = props => {
 
   const containerStyles = [
     styles.tnCardContainer,
-    radius && { borderRadius: radius },
-    styles.tnCardShadow,
+    { borderRadius: radius ?? theme.borderRadii.card },
+    appearance !== 'monochrome' && styles.tnCardShadow,
     ...spacingStyles,
     containerStyle,
   ]

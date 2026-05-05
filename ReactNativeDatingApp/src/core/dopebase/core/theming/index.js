@@ -12,13 +12,25 @@ const defaultProps = {
 }
 
 export function DopebaseProvider(props = defaultProps) {
-  const { theme, children } = props
-  const colorScheme = useColorScheme()
+  const { theme, children, appearance: forcedAppearance } = props
+  const systemColorScheme = useColorScheme()
+  const appearance = forcedAppearance || systemColorScheme || 'light'
+  
   const overridenTheme = { ...DNDefaultTheme, ...theme }
+  
+  // Resolve appearance-specific tokens
+  const resolvedRadii = overridenTheme.borderRadii?.[appearance] || overridenTheme.borderRadii?.light || overridenTheme.borderRadii
+  const resolvedFonts = overridenTheme.fontFamilies?.[appearance] || overridenTheme.fontFamilies?.light || overridenTheme.fontFamilies
+  
   const context = {
-    theme: overridenTheme,
-    appearance: colorScheme,
+    theme: {
+      ...overridenTheme,
+      borderRadii: resolvedRadii,
+      fontFamilies: resolvedFonts,
+    },
+    appearance: appearance,
   }
+  
   return (
     <DopebaseContext.Provider value={context}>
       {children}
@@ -28,23 +40,26 @@ export function DopebaseProvider(props = defaultProps) {
 
 export function useDopebase(Component, styles) {
   return props => {
-    const colorScheme = useColorScheme()
     return (
       <DopebaseContext.Consumer>
-        {context => (
-          <Component
-            {...props}
-            theme={{ ...DNDefaultTheme, ...context.theme }}
-            appearance={colorScheme || context.appearance}
-            styles={
-              styles &&
-              styles(
-                { ...DNDefaultTheme, ...context.theme },
-                context.appearance,
-              )
-            }
-          />
-        )}
+        {context => {
+          const theme = context.theme || DNDefaultTheme
+          const appearance = context.appearance || 'light'
+          return (
+            <Component
+              {...props}
+              theme={theme}
+              appearance={appearance}
+              styles={
+                styles &&
+                styles(
+                  theme,
+                  appearance,
+                )
+              }
+            />
+          )
+        }}
       </DopebaseContext.Consumer>
     )
   }
